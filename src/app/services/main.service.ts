@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -13,6 +14,7 @@ export class MainService {
       .then(async (result) => {
         console.log('result : ', result);
         this.user = await this.afAuth.currentUser;
+        this.user.updateProfile({displayName: displayName});
         this.router.navigate(['']);
       })
       .catch((error) => {
@@ -28,6 +30,10 @@ export class MainService {
         this.router.navigate(['']);
       })
       .catch((error) => {});
+  }
+
+  async logout() {
+    this.user = null;
   }
 
   constructor(public afAuth: AngularFireAuth, private router: Router) {}
