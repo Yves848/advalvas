@@ -1,19 +1,17 @@
 <p-menubar>
   <ng-template pTemplate="end">
-    <span >
-
-      <button  *ngIf="mainService.user === null" (onClick)="signIn()" pButton pRipple type="button" label="SignIn" class="p-button-text"></button>
-      Advalvas
-
-    </span>
-  </ng-template>
-  <ng-template pTemplate="end">
-    <span >
-
-      <button  *ngIf="mainService.user === null" (onClick)="signIn()" pButton pRipple type="button" label="SignIn" class="p-button-text"></button>
-      Advalvas
-
-    </span>
+    <div class="p-d-inline">
+    <button
+      *ngIf="mainService.user === null"
+      (click)="signIn()"
+      pButton
+      pRipple
+      type="button"
+      label="SignIn"
+      class="p-button-text"
+    ></button>
+    <h3>Advalvas</h3>
+  </div>
   </ng-template>
 </p-menubar>
 <div class="p-col" *ngIf="mainService.user; else showLogin">
