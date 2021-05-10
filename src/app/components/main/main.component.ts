@@ -9,19 +9,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./main.component.scss'],
 })
 export class MainComponent implements OnInit {
-  items: MenuItem[] = [];
+
 
   constructor(
-    public mainService: MainService,
-    public auth: AngularFireAuth,
-    public router: Router
   ) {}
 
-  ngOnInit(): void {
-    this.items = [{ label: 'Fichier' }];
-  }
+  ngOnInit() {}
 
-  public signIn() {
-    this.router.navigate(['signin']);
-  }
 }

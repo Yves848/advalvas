@@ -12,6 +12,9 @@ import { MainComponent } from './components/main/main.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { SigninComponent } from './auth/signin/signin.component';
 import { AngularFireModule } from '@angular/fire';
+import { CategoriesComponent } from './components/categories/categories.component';
+import { ToolbarComponent } from './toolbar/toolbar.component';
+import { CategorydetailComponent } from './component/categorydetail/categorydetail.component';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCStfnn7PHRt3I_fynHGoKMtucbqcLFNT8",
@@ -28,7 +31,11 @@ const firebaseConfig = {
     AppComponent,
     MainComponent,
     SignupComponent,
-    SigninComponent
+    SigninComponent,
+    CategoriesComponent,
+    ToolbarComponent,
+    CategorydetailComponent,
+    CategorydetailComponent
   ],
   imports: [
     BrowserModule,

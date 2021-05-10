@@ -1,0 +1,25 @@
+<p-card>
+  <div class="p-grid">
+    <div class="p-col-3">
+      <p-tree
+        [value]="categories"
+        selectionMode="single"
+        [selection]="selectedNode"
+        (onNodeSelect)="nodeSelect($event)"
+        (onNodeExpand)="nodeSelect($event)"
+        [filter]="true"
+      ></p-tree>
+    </div>
+    <div class="p-col">
+        <app-categorydetail></app-categorydetail>
+    </div>
+  </div>
+  <div class="p-grid">
+    <div class="p-col"><p-button label="Edit"></p-button></div>
+    <div class="p-col"><p-button label="Add"></p-button></div>
+    <div class="p-col"></div>
+    <div class="p-col">
+      <p-button (onClick)="export()" label="Export"></p-button>
+    </div>
+  </div>
+</p-card>
