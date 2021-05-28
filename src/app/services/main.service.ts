@@ -27,7 +27,7 @@ export class MainService {
       .signInWithEmailAndPassword(email, password)
       .then(async (result) => {
         this.user = await this.afAuth.currentUser;
-        this.router.navigate(['']);
+        this.router.navigate(['calendar-^)']);
       })
       .catch((error) => {});
   }
