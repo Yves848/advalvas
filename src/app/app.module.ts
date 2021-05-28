@@ -15,6 +15,7 @@ import { AngularFireModule } from '@angular/fire';
 import { CategoriesComponent } from './components/categories/categories.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { CategorydetailComponent } from './component/categorydetail/categorydetail.component';
+import { CalendarComponent } from './components/calendar/calendar.component';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCStfnn7PHRt3I_fynHGoKMtucbqcLFNT8",
@@ -35,7 +36,8 @@ const firebaseConfig = {
     CategoriesComponent,
     ToolbarComponent,
     CategorydetailComponent,
-    CategorydetailComponent
+    CategorydetailComponent,
+    CalendarComponent
   ],
   imports: [
     BrowserModule,
