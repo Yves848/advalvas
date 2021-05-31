@@ -16,6 +16,11 @@ import { CategoriesComponent } from './components/categories/categories.componen
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { CategorydetailComponent } from './component/categorydetail/categorydetail.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
+import { FullCalendarModule } from '@fullcalendar/angular'; // the main connector. must go first
+import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin
+import timeGridPlugin from '@fullcalendar/timegrid';
+import interactionPlugin from '@fullcalendar/interaction'; // a plugin
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyCStfnn7PHRt3I_fynHGoKMtucbqcLFNT8",
@@ -26,6 +31,13 @@ const firebaseConfig = {
   databaseURL: "https://advalvas-4ddf0-default-rtdb.europe-west1.firebasedatabase.app",
   appId: "1:604799176014:web:63f8b3a6b4fa4aad87a21f"
 };
+
+FullCalendarModule.registerPlugins([
+  // register FullCalendar plugins
+  dayGridPlugin,
+  timeGridPlugin,
+  interactionPlugin,
+]);
 
 @NgModule({
   declarations: [
@@ -45,7 +57,8 @@ const firebaseConfig = {
     AppRoutingModule,
     PrimeComponentsModule,
     AngularFireModule.initializeApp(firebaseConfig),
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    FullCalendarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
