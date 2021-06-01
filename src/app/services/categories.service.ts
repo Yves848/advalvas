@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { TreeNode } from 'primeng/api';
+import { AngularFirestore  } from '@angular/fire/firestore';
+import { meal, mealType } from '../interfaces/interfaces'
 
 @Injectable({
   providedIn: 'root',
@@ -8,7 +10,16 @@ import { TreeNode } from 'primeng/api';
 export class CategoriesService {
   selectedCategory : TreeNode = {};
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private firestore: AngularFirestore) {}
+
+  putMeal(aData: meal) {
+    return new Promise<any>((resolve, reject) => {
+      this.firestore.collection("meals").add(aData).then(res => {
+        console.log('Résultat : ',res);
+        resolve(res);
+      }, err => reject(err))
+    });
+  }
 
   getFiles() {
     return this.http

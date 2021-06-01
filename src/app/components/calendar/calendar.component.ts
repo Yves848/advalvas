@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CalendarOptions, EventClickArg, EventHoveringArg } from '@fullcalendar/angular';
 import { DateClickArg } from '@fullcalendar/interaction';
+import { CategoriesService } from '../../services/categories.service';
+import { MainService } from '../../services/main.service';
+import { MealsService } from 'src/app/services/meals.service';
+import * as meals from '../../interfaces/interfaces';
+import { ThisReceiver } from '@angular/compiler';
 
 @Component({
   selector: 'app-calendar',
@@ -11,19 +16,35 @@ export class CalendarComponent implements OnInit {
 
   onClick(arg: EventClickArg) {
     console.log(arg);
+
+  }
+
+  getMeals= () => {
+    this.mealService.getMeals().subscribe(res => {
+      res.forEach(element => {
+        console.log('res : ',element);
+      });
+    });
   }
 
   onDateClick(args: DateClickArg) {
     console.log(args);
+    console.log('Date :',args.dateStr);
+    const aData : meals.meal = {
+      date: args.dateStr,
+      moment: meals.mealType.Dejeuner,
+      content: `${args.dateStr} Event`
+    }
+
+    this.categService.putMeal(aData);
   }
 
-  constructor() { }
-  EVENTS: {}[] = [
-    {
-      title: "Déjeuner",
-      start: '2021-05-31'
-    }
-  ];
+  constructor(
+    private mainService: MainService,
+    private mealService: MealsService,
+    private categService: CategoriesService
+  ) { }
+
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
     locale: 'fr',
@@ -35,7 +56,7 @@ export class CalendarComponent implements OnInit {
     //eventMouseLeave: this.onLeave.bind(this),
     eventClick: this.onClick.bind(this),
     dateClick: this.onDateClick.bind(this),
-    events: this.EVENTS,
+    events: this.mainService.EVENTS,
     headerToolbar: {
       left: 'title',
       center: 'today',
@@ -44,6 +65,7 @@ export class CalendarComponent implements OnInit {
   };
 
   ngOnInit(): void {
+    this.getMeals();
   }
 
 }
