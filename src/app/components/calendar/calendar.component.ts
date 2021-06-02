@@ -4,7 +4,7 @@ import { DateClickArg } from '@fullcalendar/interaction';
 import { CategoriesService } from '../../services/categories.service';
 import { MainService } from '../../services/main.service';
 import { MealsService } from 'src/app/services/meals.service';
-import * as meals from '../../interfaces/interfaces';
+import * as Meals from '../../interfaces/interfaces';
 import { ThisReceiver } from '@angular/compiler';
 
 @Component({
@@ -21,8 +21,18 @@ export class CalendarComponent implements OnInit {
 
   getMeals= () => {
     this.mealService.getMeals().subscribe(res => {
+      console.log('Clear EVENTS');
+      this.mainService.EVENTS = [];
       res.forEach(element => {
-        console.log('res : ',element);
+        const aMeal: Meals.meal = <Meals.meal>element.payload.doc.data();
+        console.log('res : ',aMeal.date, aMeal.content);
+        this.mainService.EVENTS.push(
+          {
+            start: aMeal.date,
+            title: aMeal.content,
+            extendedProps: aMeal
+          }
+        );
       });
     });
   }
@@ -30,9 +40,9 @@ export class CalendarComponent implements OnInit {
   onDateClick(args: DateClickArg) {
     console.log(args);
     console.log('Date :',args.dateStr);
-    const aData : meals.meal = {
-      date: args.dateStr,
-      moment: meals.mealType.Dejeuner,
+    const aData : Meals.meal = {
+      date: `${args.dateStr}T${Meals.mealType.Dejeuner}`,
+      moment: Meals.mealType.Dejeuner,
       content: `${args.dateStr} Event`
     }
 
@@ -40,7 +50,7 @@ export class CalendarComponent implements OnInit {
   }
 
   constructor(
-    private mainService: MainService,
+    public mainService: MainService,
     private mealService: MealsService,
     private categService: CategoriesService
   ) { }

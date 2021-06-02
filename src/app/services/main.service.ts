@@ -8,7 +8,12 @@ import { MealsService } from '../services/meals.service'
 })
 export class MainService {
   user: any = null;
-  EVENTS:{}[] = [];
+  EVENTS:{}[] = [
+    {
+      start: "2021-06-02T08:00:00",
+      title: "Test"
+    }
+  ];
 
   async createNewUser(email: string, password: string, displayName?: String) {
     this.afAuth
