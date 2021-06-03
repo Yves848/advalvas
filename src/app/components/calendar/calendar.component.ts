@@ -1,10 +1,12 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { CalendarOptions, EventClickArg, EventHoveringArg, FullCalendarComponent } from '@fullcalendar/angular';
+import { CalendarOptions, EventApi, EventClickArg, EventHoveringArg, FullCalendarComponent } from '@fullcalendar/angular';
 import { DateClickArg } from '@fullcalendar/interaction';
 import { CategoriesService } from '../../services/categories.service';
 import { MainService } from '../../services/main.service';
 import { MealsService } from 'src/app/services/meals.service';
 import * as Meals from '../../interfaces/interfaces';
+import { OverlayPanel } from 'primeng/overlaypanel';
+
 
 
 @Component({
@@ -15,20 +17,23 @@ import * as Meals from '../../interfaces/interfaces';
 export class CalenComponent implements OnInit {
 
   @ViewChild('calendar') calendar: FullCalendarComponent | undefined;
+  @ViewChild('op') op: OverlayPanel | undefined;
+  id : string = "";
+  anEvent: any;
 
   onClick(arg: EventClickArg) {
     const el = this.calendar?.getApi().getEventById(arg.event.id);
-    console.log(el);
-    console.log(arg.event.id);
+    this.id = arg.event.id;
+    this.anEvent = arg;
+    this.op?.toggle(arg.event,arg.el);
   }
 
   getMeals= () => {
+    console.log("getMeals");
     this.mealService.getMeals().subscribe(res => {
       this.mainService.EVENTS = [];
       res.forEach(element => {
         const aMeal: Meals.meal = <Meals.meal>element.payload.doc.data();
-        // console.log('Index : ',element.payload.doc.id);
-        // console.log('res : ',aMeal.date, aMeal.content);
         this.mainService.EVENTS.push(
           {
             id: element.payload.doc.id,
@@ -42,13 +47,23 @@ export class CalenComponent implements OnInit {
     });
   }
 
+  checkID= (el: any) => {
+    return el.id === this.id;
+  }
+
+  deleteEvent = (event: MouseEvent) => {
+    const eventObj  = this.calendar?.getApi().getEventById(this.id);
+    const anEvent = <EventClickArg>this.anEvent;
+    this.op?.toggle(anEvent.event, anEvent.el);
+    eventObj?.remove();
+    this.categService.removeMeal(this.id);
+  }
+
   addEvent = () => {
     console.log('addEvent');
   };
 
   onDateClick(args: DateClickArg) {
-    console.log(args);
-    console.log('Date :',args.dateStr);
     const aData : Meals.meal = {
       date: `${args.dateStr}T${Meals.mealType.Dejeuner}`,
       moment: Meals.mealType.Dejeuner,
@@ -79,7 +94,6 @@ export class CalenComponent implements OnInit {
     eventClick: this.onClick.bind(this),
     dateClick: this.onDateClick.bind(this),
     events: this.mainService.EVENTS,
-    eventAdd: this.eventAdd.bind(this),
     headerToolbar: {
       left: 'title',
       center: 'today',

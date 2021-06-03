@@ -21,6 +21,10 @@ export class CategoriesService {
     });
   }
 
+  removeMeal(mealId : string) {
+    this.firestore.collection('meals').doc(mealId).delete();
+  }
+
   getFiles() {
     return this.http
       .get<any>('../../assets/data/categories.json')
