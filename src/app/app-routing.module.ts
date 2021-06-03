@@ -4,7 +4,7 @@ import { SignupComponent } from './auth/signup/signup.component';
 import { SigninComponent } from './auth/signin/signin.component';
 import { MainComponent } from './components/main/main.component';
 import { CategoriesComponent } from './components/categories/categories.component';
-import { CalendarComponent } from './components/calendar/calendar.component';
+import { CalenComponent } from './components/calendar/calendar.component';
 
 
 const routes: Routes = [
@@ -12,7 +12,7 @@ const routes: Routes = [
   {path: 'signup',component: SignupComponent},
   {path: 'signin', component: SigninComponent},
   {path: 'categories', component: CategoriesComponent},
-  {path: 'calendar', component: CalendarComponent}
+  {path: 'calendar', component: CalenComponent}
 
 ];
 @NgModule({

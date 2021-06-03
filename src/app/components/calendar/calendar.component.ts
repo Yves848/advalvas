@@ -1,41 +1,50 @@
-import { Component, OnInit } from '@angular/core';
-import { CalendarOptions, EventClickArg, EventHoveringArg } from '@fullcalendar/angular';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { CalendarOptions, EventClickArg, EventHoveringArg, FullCalendarComponent } from '@fullcalendar/angular';
 import { DateClickArg } from '@fullcalendar/interaction';
 import { CategoriesService } from '../../services/categories.service';
 import { MainService } from '../../services/main.service';
 import { MealsService } from 'src/app/services/meals.service';
 import * as Meals from '../../interfaces/interfaces';
-import { ThisReceiver } from '@angular/compiler';
+
 
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss']
 })
-export class CalendarComponent implements OnInit {
+export class CalenComponent implements OnInit {
+
+  @ViewChild('calendar') calendar: FullCalendarComponent | undefined;
 
   onClick(arg: EventClickArg) {
-    console.log(arg);
-
+    const el = this.calendar?.getApi().getEventById(arg.event.id);
+    console.log(el);
+    console.log(arg.event.id);
   }
 
   getMeals= () => {
     this.mealService.getMeals().subscribe(res => {
-      console.log('Clear EVENTS');
       this.mainService.EVENTS = [];
       res.forEach(element => {
         const aMeal: Meals.meal = <Meals.meal>element.payload.doc.data();
-        console.log('res : ',aMeal.date, aMeal.content);
+        // console.log('Index : ',element.payload.doc.id);
+        // console.log('res : ',aMeal.date, aMeal.content);
         this.mainService.EVENTS.push(
           {
+            id: element.payload.doc.id,
             start: aMeal.date,
             title: aMeal.content,
             extendedProps: aMeal
           }
         );
       });
+      this.calendarOptions.events = this.mainService.EVENTS;
     });
   }
+
+  addEvent = () => {
+    console.log('addEvent');
+  };
 
   onDateClick(args: DateClickArg) {
     console.log(args);
@@ -45,7 +54,6 @@ export class CalendarComponent implements OnInit {
       moment: Meals.mealType.Dejeuner,
       content: `${args.dateStr} Event`
     }
-
     this.categService.putMeal(aData);
   }
 
@@ -54,6 +62,10 @@ export class CalendarComponent implements OnInit {
     private mealService: MealsService,
     private categService: CategoriesService
   ) { }
+
+  eventAdd(addIndo : any) {
+    console.log('eventAdd :',addIndo)
+  }
 
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
@@ -67,6 +79,7 @@ export class CalendarComponent implements OnInit {
     eventClick: this.onClick.bind(this),
     dateClick: this.onDateClick.bind(this),
     events: this.mainService.EVENTS,
+    eventAdd: this.eventAdd.bind(this),
     headerToolbar: {
       left: 'title',
       center: 'today',

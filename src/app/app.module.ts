@@ -15,7 +15,7 @@ import { AngularFireModule } from '@angular/fire';
 import { CategoriesComponent } from './components/categories/categories.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { CategorydetailComponent } from './component/categorydetail/categorydetail.component';
-import { CalendarComponent } from './components/calendar/calendar.component';
+import { CalenComponent } from './components/calendar/calendar.component';
 import { FullCalendarModule } from '@fullcalendar/angular'; // the main connector. must go first
 import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -50,7 +50,7 @@ FullCalendarModule.registerPlugins([
     ToolbarComponent,
     CategorydetailComponent,
     CategorydetailComponent,
-    CalendarComponent,
+    CalenComponent,
     AddmealComponent
   ],
   imports: [
