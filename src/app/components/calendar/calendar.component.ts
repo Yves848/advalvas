@@ -12,6 +12,7 @@ import { MainService } from '../../services/main.service';
 import { MealsService } from 'src/app/services/meals.service';
 import * as Meals from '../../interfaces/interfaces';
 import { OverlayPanel } from 'primeng/overlaypanel';
+import { empty } from 'rxjs';
 
 @Component({
   selector: 'app-calendar',
@@ -21,8 +22,15 @@ import { OverlayPanel } from 'primeng/overlaypanel';
 export class CalenComponent implements OnInit {
   @ViewChild('calendar') calendar: FullCalendarComponent | undefined;
   @ViewChild('op') op: OverlayPanel | undefined;
+
   id: string = '';
   anEvent: any;
+  aMeal: Meals.meal = {date: "", content: "", moment: Meals.mealType.Dejeuner};
+
+
+  rHours = new Map<Meals.mealType,String>();
+
+
   hours = [
     { moment: Meals.mealType.Dejeuner, name: 'Déjeuner' },
     { moment: Meals.mealType.DixHeure, name: '10h' },
@@ -37,11 +45,14 @@ export class CalenComponent implements OnInit {
     const el = this.calendar?.getApi().getEventById(arg.event.id);
     this.id = arg.event.id;
     this.anEvent = arg;
+    this.aMeal = <Meals.meal>arg.event.extendedProps.meal;
+    console.log('aMeal', this.aMeal);
+    this.selectedHour = this.rHours.get(this.aMeal.moment);
+    console.log(this.selectedHour)
     this.op?.toggle(arg.event, arg.el);
   }
 
   filterHour(event: any) {
-    //in a real application, make a request to a remote url with the query and return filtered results, for demo we filter at client side
     let filtered: any[] = [];
     let query = event.query;
 
@@ -57,10 +68,14 @@ export class CalenComponent implements OnInit {
 
   saveMeal = (event: MouseEvent) => {
     console.log("save", event);
-
+    console.log('moment',this.selectedHour);
     const eventObj = this.calendar?.getApi().getEventById(this.id);
     console.log("save", eventObj);
     const anEvent = <EventClickArg>this.anEvent;
+    this.aMeal = {date: this.aMeal.date,
+      moment:  this.selectedHour.moment,
+      content: this.aMeal.content};
+    eventObj?.setExtendedProp('meal',this.aMeal);
     this.op?.toggle(anEvent.event, anEvent.el);
   }
 
@@ -74,7 +89,7 @@ export class CalenComponent implements OnInit {
           id: element.payload.doc.id,
           start: `${aMeal.date}T${aMeal.moment}`,
           title: aMeal.content,
-          extendedProps: aMeal,
+          meal: aMeal,
         });
       });
       this.calendarOptions.events = this.mainService.EVENTS;
@@ -110,7 +125,9 @@ export class CalenComponent implements OnInit {
     public mainService: MainService,
     private mealService: MealsService,
     private categService: CategoriesService
-  ) {}
+  ) {
+
+  }
 
   eventAdd(addIndo: any) {
     console.log('eventAdd :', addIndo);
@@ -138,5 +155,11 @@ export class CalenComponent implements OnInit {
 
   ngOnInit(): void {
     this.getMeals();
+    this.rHours.set(Meals.mealType.Dejeuner,"Déjeuner");
+    this.rHours.set(Meals.mealType.DixHeure,"10h");
+    this.rHours.set(Meals.mealType.Diner,"Dîner");
+    this.rHours.set(Meals.mealType.SeizeHeure,"16h");
+    this.rHours.set(Meals.mealType.Souper,"Souper");
+
   }
 }
