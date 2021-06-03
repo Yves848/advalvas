@@ -1,36 +1,52 @@
-<div class="p-grid" style="margin-top: 25px">
-  <div class="p-col">
-    <full-calendar
-      #calendar
-      class="calendar"
-      [options]="calendarOptions"
-    ></full-calendar>
-  </div>
-  <div class="p-col">
-    <app-addmeal></app-addmeal>
-  </div>
-</div>
-
-<p-overlayPanel #op>
-  <ng-template pTemplate>
-    <div class="p-fluid p-formgrid p-grid">
-      <div class="p-field p-col">
-        <label for="firstname">Firstname</label>
-
-        <input id="firstname" type="text" pInputText />
-      </div>
-      <div class="p-field p-col">
-        <label for="lastname">Lastname</label>
-
-        <input id="lastname" type="text" pInputText />
-      </div>
+<div class="calgen">
+  <div class="p-grid">
+    <div class="p-col-2"></div>
+    <div class="p-col">
+      <full-calendar #calendar [options]="calendarOptions"></full-calendar>
     </div>
+    <div class="p-col-2"></div>
+  </div>
 
-    <button
-      type="text"
-      pButton
-      label="Basic"
-      (click)="deleteEvent($event)"
-    ></button>
-  </ng-template>
-</p-overlayPanel>
+  <p-overlayPanel #op>
+    <ng-template pTemplate>
+      <div class="p-fluid p-formgrid p-grid">
+        <div class="p-field p-col">
+          <label for="firstname">Heure</label>
+
+          <p-autoComplete
+            [(ngModel)]="selectedHour"
+            [suggestions]="filteredHours"
+            (completeMethod)="filterHour($event)"
+            field="name"
+            [minLength]="1"
+          ></p-autoComplete>
+        </div>
+        <div class="p-field p-col">
+          <label for="repas">Repas</label>
+
+          <input id="repas" type="text" pInputText />
+        </div>
+      </div>
+      <div class="p-fluid p-grid">
+        <div class="p-col-2"></div>
+        <div class="p-col">
+          <button
+            type="text"
+            pButton
+            label="Delete"
+            (click)="deleteEvent($event)"
+          ></button>
+        </div>
+        <div class="p-col">
+          <button
+            type="text"
+            pButton
+            label="Save"
+            (click)="saveMeal($event)"
+          ></button>
+        </div>
+        <div class="p-col-2"></div>
+      </div>
+    </ng-template>
+  </p-overlayPanel>
+</div>
