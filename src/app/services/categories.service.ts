@@ -25,6 +25,10 @@ export class CategoriesService {
     this.firestore.collection('meals').doc(mealId).delete();
   }
 
+  updateMeal(id : string, aData : meal) {
+    this.firestore.collection('meals').doc(id).update(aData);
+  }
+
   getFiles() {
     return this.http
       .get<any>('../../assets/data/categories.json')
