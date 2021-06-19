@@ -12,7 +12,7 @@ import { MainService } from '../../services/main.service';
 import { MealsService } from 'src/app/services/meals.service';
 import * as Meals from '../../interfaces/interfaces';
 import { OverlayPanel } from 'primeng/overlaypanel';
-import { empty } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-calendar',
@@ -124,6 +124,11 @@ export class CalenComponent implements OnInit {
     return el.id === this.id;
   };
 
+  listClick = () => {
+    console.log('listClick');
+    this.router.navigate(['list']);
+  }
+
   deleteEvent = (event: MouseEvent) => {
     const eventObj = this.calendar?.getApi().getEventById(this.id);
     const anEvent = <EventClickArg>this.anEvent;
@@ -148,7 +153,8 @@ export class CalenComponent implements OnInit {
   constructor(
     public mainService: MainService,
     private mealService: MealsService,
-    private categService: CategoriesService
+    private categService: CategoriesService,
+    private router: Router
   ) {
 
   }

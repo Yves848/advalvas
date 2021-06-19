@@ -20,7 +20,8 @@ import { FullCalendarModule } from '@fullcalendar/angular'; // the main connecto
 import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import { AddmealComponent } from './components/addmeal/addmeal.component'; // a plugin
+import { AddmealComponent } from './components/addmeal/addmeal.component';
+import { ListeComponent } from './components/liste/liste.component'; // a plugin
 
 
 const firebaseConfig = {
@@ -51,7 +52,8 @@ FullCalendarModule.registerPlugins([
     CategorydetailComponent,
     CategorydetailComponent,
     CalenComponent,
-    AddmealComponent
+    AddmealComponent,
+    ListeComponent
   ],
   imports: [
     BrowserModule,

@@ -4,9 +4,11 @@
     <div class="p-col">
       <full-calendar #calendar [options]="calendarOptions"></full-calendar>
     </div>
-    <div class="p-col-2"></div>
-  </div>
+    <div class="p-col-2">
 
+    </div>
+  </div>
+  <p-button (click)="listClick()">Liste</p-button>
   <p-overlayPanel #op>
     <ng-template pTemplate>
       <div class="p-fluid p-formgrid p-grid">
