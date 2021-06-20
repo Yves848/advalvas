@@ -17,10 +17,17 @@ export class ListeComponent implements OnInit {
     console.log('getMeals');
     const tempEvents: meal[] = [];
     this.mealService.getMeals().subscribe((res) => {
-
       res.forEach((element) => {
         const aMeal: Meals.meal = <Meals.meal>element.payload.doc.data();
-        tempEvents.push(aMeal);
+        aMeal.id = element.payload.doc.id;
+        const pos = tempEvents
+          .map(function (e) {
+            return e.id;
+          })
+          .indexOf(aMeal.id);
+        if (pos === -1) {
+          tempEvents.push(aMeal);
+        }
       });
       this.EVENTS = [];
       this.EVENTS = tempEvents.sort((meal1: meal, meal2: meal) => {
@@ -35,6 +42,6 @@ export class ListeComponent implements OnInit {
   };
 
   async ngOnInit() {
-   await  this.getMeals();
+    await this.getMeals();
   }
 }
