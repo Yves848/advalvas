@@ -1,1 +1,7 @@
-<p>liste works!</p>
+<div>
+  <ul>
+    <li *ngFor="let event of EVENTS">
+     {{event.date}}  - {{event.moment}}  -  {{ event.content }}
+    </li>
+  </ul>
+</div>

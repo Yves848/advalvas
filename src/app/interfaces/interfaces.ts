@@ -7,6 +7,7 @@ export enum mealType {
 }
 
 export interface meal {
+  id?: string,
   date: string,
   moment: mealType,
   content: string
