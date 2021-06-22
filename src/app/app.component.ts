@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { PrimeNGConfig } from 'primeng/api';
 import * as firebase from 'firebase';
 
 @Component({
@@ -6,9 +7,14 @@ import * as firebase from 'firebase';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-  constructor() {
 
+
+export class AppComponent implements OnInit {
+  constructor(private primengConfig: PrimeNGConfig) {
+
+  }
+  ngOnInit() {
+    this.primengConfig.ripple = true;
   }
   title = 'advalvas';
 }

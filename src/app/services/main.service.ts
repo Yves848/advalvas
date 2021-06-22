@@ -34,7 +34,7 @@ export class MainService {
     console.log('checkLocalStorage',user.displayName);
     if (user.displayName) {
       this.user = user;
-      this.router.navigate(['calendar']);
+      this.router.navigate(['list']);
     }
 
   }
@@ -45,7 +45,7 @@ export class MainService {
       .then(async (result) => {
         this.user = await this.afAuth.currentUser;
         localStorage.setItem('user',JSON.stringify(this.user));
-        this.router.navigate(['calendar']);
+        this.router.navigate(['list']);
       })
       .catch((error) => {});
   }

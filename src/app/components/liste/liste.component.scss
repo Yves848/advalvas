@@ -1,8 +1,17 @@
 .myIcon {
-  padding: 0px 2px 0px 2px
+  padding: 0px 2px 0px 0px
 }
 
 :host ::ng-deep .row_dejeuner {
   background-color: dimgrey;
   color: aqua;
+}
+
+.divbtn {
+align-content: center;
+}
+
+.btn {
+  width: 200px;
+
 }

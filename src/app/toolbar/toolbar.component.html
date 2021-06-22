@@ -1,8 +1,26 @@
 <p-toolbar>
   <div class="p-toolbar-group-left">
-    <div *ngIf="mainService.user">
-      <h3 style="margin: 0px; padding: 0px">{{ mainService.user.displayName }}</h3>
-    </div>
+
+    <button
+      *ngIf="mainService.user !== null"
+      (click)="goCalendar()"
+      pButton
+      pRipple
+      type="button"
+      label="Calendrier"
+      style="width: 10rem;"
+      class="p-button-rounded p-button-primary btn"
+    ></button>
+    <button
+      *ngIf="mainService.user !== null"
+      (click)="goList()"
+      pButton
+      pRipple
+      type="button"
+      label="Liste"
+      style="width: 10rem;"
+      class="p-button-rounded p-button-primary btn"
+    ></button>
   </div>
 
   <div class="p-toolbar-group-right">
@@ -12,8 +30,8 @@
       pButton
       pRipple
       type="button"
-      label="SignIn"
-      class="p-button-text p-button-sm"
+      label="S'identifier"
+      class="p-button-rounded p-button-warning btn"
     ></button>
     <button
       *ngIf="mainService.user !== null"
@@ -21,9 +39,20 @@
       pButton
       pRipple
       type="button"
-      label="SignOut"
-      class="p-button-text p-button-sm"
+      label="Se Déconnecter"
+      class="p-button-rounded p-button-warning btn"
     ></button>
-    <h3 style="margin: 0px; padding: 0px">AdValvas</h3>
+
+    <div *ngIf="mainService.user; then userLoggedIn else noUser">
+
+    </div>
+
+    <ng-template #userLoggedIn>
+      <h3 style="margin: 0px; padding: 0px">{{getTitle() }}</h3>
+    </ng-template>
+
+    <ng-template #noUser>
+      <h3 style="margin: 0px; padding: 0px">AdValvas</h3>
+    </ng-template>
   </div>
 </p-toolbar>

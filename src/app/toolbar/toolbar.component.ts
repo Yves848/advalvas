@@ -12,6 +12,7 @@ import { MainService } from './../services/main.service';
 export class ToolbarComponent implements OnInit {
 
   items: MenuItem[] = [];
+  title: string = '';
 
   constructor(
     public mainService: MainService,
@@ -28,4 +29,22 @@ export class ToolbarComponent implements OnInit {
     this.router.navigate(['signin']);
   }
 
+  public goCalendar() {
+    this.router.navigate(['calendar']);
+  }
+
+  public goList() {
+    this.router.navigate(['list']);
+  }
+
+  getTitle = () => {
+    if (this.mainService.user.displayName) {
+      return `Advalvas - ${this.mainService.user.displayName}`;
+    }
+    else
+    {
+      return `Advalvas`;
+    }
+
+  }
 }

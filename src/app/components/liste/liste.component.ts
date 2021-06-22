@@ -12,7 +12,7 @@ import { CategoriesService } from '../../services/categories.service';
 })
 export class ListeComponent implements OnInit {
   EVENTS: meal[] = [];
-
+  visibleSidebar2 = true;
   constructor(
     public ws: MainService,
     private mealService: MealsService,

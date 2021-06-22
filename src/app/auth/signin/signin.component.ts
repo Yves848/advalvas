@@ -13,10 +13,7 @@ export class SigninComponent implements OnInit {
   constructor(public mainService: MainService) { }
 
   submit(event: any) {
-    console.log('email:',this.email);
-    console.log('password:', this.password);
     this.mainService.login(this.email,this.password);
-
   }
 
   ngOnInit(): void {
