@@ -24,11 +24,27 @@ export class MainService {
       });
   }
 
+  checkLocalStorage = () => {
+    var localS  = localStorage.getItem('user');
+    var local2 : string = '{}';
+    if (localS) {
+      local2 = localS;
+    }
+    const user = JSON.parse(local2);
+    console.log('checkLocalStorage',user.displayName);
+    if (user.displayName) {
+      this.user = user;
+      this.router.navigate(['calendar']);
+    }
+
+  }
+
   async login(email: string, password: string) {
     this.afAuth
       .signInWithEmailAndPassword(email, password)
       .then(async (result) => {
         this.user = await this.afAuth.currentUser;
+        localStorage.setItem('user',JSON.stringify(this.user));
         this.router.navigate(['calendar']);
       })
       .catch((error) => {});
@@ -36,6 +52,8 @@ export class MainService {
 
   async logout() {
     this.user = null;
+    localStorage.removeItem('user');
+    this.router.navigate(['']);
   }
 
   constructor(public afAuth: AngularFireAuth, private router: Router, private mealService: MealsService) {}

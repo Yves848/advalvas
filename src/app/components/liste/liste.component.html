@@ -1,7 +1,27 @@
-<div>
-  <ul>
-    <li *ngFor="let event of EVENTS">
-     {{event.date}}  - {{event.moment}}  -  {{ event.content }}
-    </li>
-  </ul>
+
+
+<div class="card p-shadow-5">
+  <p-table [value]="EVENTS" [scrollable]="true" scrollHeight="65vh">
+      <ng-template pTemplate="header">
+          <tr>
+              <th [width]="100">Actions</th>
+              <th [width]="150">Date</th>
+              <th [width]="100">Heure</th>
+              <th>Repas</th>
+          </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-event>
+          <tr [ngClass]="{'row_dejeuner': event.moment === '08:00:00'}">
+            <td [ngClass]="{'row_dejeuner': event.moment === '08:00:00'}" [width]="100">
+              <i class="pi pi-plus-circle myIcon" (click)="onPlusClick(event.id)"></i>
+              <i class="pi pi-pencil myIcon"></i>
+              <i class="pi pi-minus-circle myIcon" (click)="onMinusClick(event.id)"></i>
+            </td>
+              <td [ngClass]="{'row_dejeuner': event.moment === '08:00:00'}" [width]="150">{{event.date}}</td>
+              <td [ngClass]="{'row_dejeuner': event.moment === '08:00:00'}" [width]="100">{{event.moment}}</td>
+              <td [ngClass]="{'row_dejeuner': event.moment === '08:00:00'}">{{event.content}}</td>
+
+          </tr>
+      </ng-template>
+  </p-table>
 </div>

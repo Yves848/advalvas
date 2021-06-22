@@ -20,6 +20,7 @@ export class ToolbarComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.mainService.checkLocalStorage();
     this.items = [{ label: 'Fichier' }];
   }
 

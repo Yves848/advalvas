@@ -2,6 +2,13 @@
   "database": {
     "rules": "database.rules.json"
   },
+  "public": "docs",
+  "rewrites": [
+    {
+      "source": "**",
+      "destination": "/index.html"
+    }
+  ],
   "hosting": {
     "public": "public",
     "ignore": [
