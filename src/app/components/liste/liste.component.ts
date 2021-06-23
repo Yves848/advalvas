@@ -51,7 +51,7 @@ export class ListeComponent implements OnInit, OnDestroy {
   show() {
     this.ref = this.dialogService.open(AddmealComponent,{
       header: "Ajouter un repas",
-      width: '80%',
+      width: '60rem',
       contentStyle: {"max-height": "1000px", "overflow": "auto"},
       baseZIndex: 10000
     })

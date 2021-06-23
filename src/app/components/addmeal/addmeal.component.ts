@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as Meals from '../../interfaces/interfaces';
 import { MainService } from '../../services/main.service';
+import { CategoriesService } from 'src/app/services/categories.service';
 
 @Component({
   selector: 'app-addmeal',
@@ -26,7 +27,7 @@ export class AddmealComponent implements OnInit {
   };
   dateRepas: Date = new Date();
   selectedValue : string = '';
-  constructor(private mainService: MainService) {}
+  constructor(private mainService: MainService, private categorieService: CategoriesService) {}
 
   ngOnInit(): void {
     this.rHours.set(Meals.mealType.Dejeuner, 'Déjeuner');
@@ -37,18 +38,13 @@ export class AddmealComponent implements OnInit {
 
   }
 
-  saveMeal = (event: MouseEvent) => {
+  saveMeal =async  (event: MouseEvent) => {
     this.aMeal = {
-      date: this.aMeal.date,
+      date: this.dateRepas.toISOString().split('T')[0],
       moment: this.selectedHour.moment,
       content: this.aMeal.content,
     };
-    this.mainService.EVENTS.push({
-      //id: this.id,
-      start: `${this.aMeal.date}T${this.selectedHour.moment}`,
-      title: this.aMeal.content,
-      meal: this.aMeal,
-    });
-    console.log('saveMeal [this.aMeal]', this.aMeal);
+    const id = await this.categorieService.putMeal(this.aMeal);
+    console.log('saveMeal [this.aMeal]', id);
   };
 }
