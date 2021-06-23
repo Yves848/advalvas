@@ -1,3 +1,52 @@
-<p-card header="Détail repas" styleClass="p-shadow-12">
+<div class="p-d-flex p-flex-column addMealDialog">
+  <div class="p-fluid p-formgrid p-grid">
+    <div class="p-field p-col-12 p-md-6">
+      <label for="Hour">Date</label>
+      <p-calendar
+        [(ngModel)]="dateRepas"
+        [inline]="true"
+        [autoZIndex]="true"
+      ></p-calendar>
+    </div>
+    <div class="p-field p-col-12 p-md-6">
+      <div class="p-d-flex p-flex-column">
+        <div class="p-mb-2">
+          <label for="Hour">Heure</label>
+          <p-dropdown
+            [options]="hours"
+            [(ngModel)]="selectedHour"
+            optionLabel="name"
+            [showClear]="true"
+          >
+        </p-dropdown>
+          <div class="p-mb-2" style="margin-top: 10px;">
+            <label for="repas">Repas</label>
+            <input
+              [(ngModel)]="aMeal.content"
+              id="repas"
+              type="text"
+              pInputText
+            />
+          </div>
+        </div>
+      </div>
+    </div>
 
-</p-card>
+
+  </div>
+  <div class="p-mt-auto">
+    <div class="p-d-flex p-jc-center">
+      <div class="p-mr-2">
+        <button type="text" pButton label="Abandon"></button>
+      </div>
+      <div>
+        <button
+          type="text"
+          pButton
+          label="Sauver"
+          (click)="saveMeal($event)"
+        ></button>
+      </div>
+    </div>
+  </div>
+</div>

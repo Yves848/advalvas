@@ -1,22 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MainService } from '../../services/main.service';
 import { MealsService } from '../../services/meals.service';
 import * as Meals from '../../interfaces/interfaces';
 import { meal } from '../../interfaces/interfaces';
 import { CategoriesService } from '../../services/categories.service';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { AddmealComponent } from '../addmeal/addmeal.component';
 
 @Component({
   selector: 'app-liste',
   templateUrl: './liste.component.html',
   styleUrls: ['./liste.component.scss'],
+  providers: [DialogService]
 })
-export class ListeComponent implements OnInit {
+export class ListeComponent implements OnInit, OnDestroy {
   EVENTS: meal[] = [];
   visibleSidebar2 = true;
+  ref: DynamicDialogRef | undefined;
+
   constructor(
     public ws: MainService,
     private mealService: MealsService,
-    private categService: CategoriesService
+    private categService: CategoriesService,
+    private dialogService: DialogService
   ) {}
 
   onPlusClick = (id: string) => {
@@ -35,6 +41,21 @@ export class ListeComponent implements OnInit {
       await callbak(anArray[i]);
     }
   };
+
+  ngOnDestroy() {
+    if (this.ref) {
+      this.ref.close();
+    }
+  }
+
+  show() {
+    this.ref = this.dialogService.open(AddmealComponent,{
+      header: "Ajouter un repas",
+      width: '80%',
+      contentStyle: {"max-height": "1000px", "overflow": "auto"},
+      baseZIndex: 10000
+    })
+  }
 
   getMeals = async () => {
     console.log('getMeals');
