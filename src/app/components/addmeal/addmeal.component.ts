@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import * as Meals from '../../interfaces/interfaces';
 import { MainService } from '../../services/main.service';
 import { CategoriesService } from 'src/app/services/categories.service';
+import {DynamicDialogRef} from 'primeng/dynamicdialog';
+import {DynamicDialogConfig} from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-addmeal',
@@ -27,7 +29,7 @@ export class AddmealComponent implements OnInit {
   };
   dateRepas: Date = new Date();
   selectedValue : string = '';
-  constructor(private mainService: MainService, private categorieService: CategoriesService) {}
+  constructor(private mainService: MainService, private categorieService: CategoriesService, public ref: DynamicDialogRef, public config: DynamicDialogConfig) {}
 
   ngOnInit(): void {
     this.rHours.set(Meals.mealType.Dejeuner, 'Déjeuner');
@@ -37,6 +39,8 @@ export class AddmealComponent implements OnInit {
     this.rHours.set(Meals.mealType.Souper, 'Souper');
 
   }
+
+
 
   saveMeal =async  (event: MouseEvent) => {
     const jour = this.dateRepas.getDate().toString().padStart(2,'0');
@@ -51,5 +55,6 @@ export class AddmealComponent implements OnInit {
     };
     const id = await this.categorieService.putMeal(this.aMeal);
     console.log('saveMeal [this.aMeal]', id);
+    this.ref.close();
   };
 }

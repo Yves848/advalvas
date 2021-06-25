@@ -57,6 +57,7 @@ export class ListeComponent implements OnInit, OnDestroy {
     })
   }
 
+
   getMeals = async () => {
     console.log('getMeals');
     const tempEvents: meal[] = [];
