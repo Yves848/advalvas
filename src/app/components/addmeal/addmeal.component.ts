@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import * as Meals from '../../interfaces/interfaces';
 import { MainService } from '../../services/main.service';
 import { CategoriesService } from 'src/app/services/categories.service';
@@ -11,6 +11,7 @@ import {DynamicDialogConfig} from 'primeng/dynamicdialog';
   styleUrls: ['./addmeal.component.scss'],
 })
 export class AddmealComponent implements OnInit {
+  @ViewChild('content') content : ElementRef | undefined;
   rHours = new Map<Meals.mealType, String>();
 
   hours = [
@@ -49,6 +50,9 @@ export class AddmealComponent implements OnInit {
       this.dateRepas = new Date(data.aMeal.date);
       this.aMeal = data.aMeal;
     }
+    setTimeout(()=>{ // this will make the execution after the above boolean has changed
+      this.content?.nativeElement.focus();
+    },0);
 
   }
 
