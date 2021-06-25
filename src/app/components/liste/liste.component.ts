@@ -68,7 +68,7 @@ export class ListeComponent implements OnInit, OnDestroy {
       await this.asyncForEach(aRes, (element: any) => {
         const aMeal: Meals.meal = <Meals.meal>element.payload.doc.data();
         aMeal.id = element.payload.doc.id;
-        console.log('foreach ', aMeal.id, aMeal.date);
+        //console.log('foreach ', aMeal.id, aMeal.date);
         const pos = tempEvents
           .map(function (e) {
             return e.id;

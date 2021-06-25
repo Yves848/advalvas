@@ -18,7 +18,7 @@ export class AddmealComponent implements OnInit {
     { moment: Meals.mealType.SeizeHeure, name: '16h', color: 'blue' },
     { moment: Meals.mealType.Souper, name: 'Souper', color: 'teal' },
   ];
-  selectedHour: any;
+  selectedHour= this.hours[0];
   filteredHours: any[] = [];
   aMeal: Meals.meal = {
     date: '',
@@ -39,8 +39,13 @@ export class AddmealComponent implements OnInit {
   }
 
   saveMeal =async  (event: MouseEvent) => {
+    const jour = this.dateRepas.getDate().toString().padStart(2,'0');
+    const mois = (this.dateRepas.getMonth()+1).toString().padStart(2,'0');
+    const annee = this.dateRepas.getFullYear().toString();
+    const sdate = `${annee}:${mois}:${jour}`;
+    console.log('date:',sdate)
     this.aMeal = {
-      date: this.dateRepas.toISOString().split('T')[0],
+      date: sdate,
       moment: this.selectedHour.moment,
       content: this.aMeal.content,
     };
