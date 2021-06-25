@@ -2,8 +2,9 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import * as Meals from '../../interfaces/interfaces';
 import { MainService } from '../../services/main.service';
 import { CategoriesService } from 'src/app/services/categories.service';
-import {DynamicDialogRef} from 'primeng/dynamicdialog';
-import {DynamicDialogConfig} from 'primeng/dynamicdialog';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DynamicDialogConfig } from 'primeng/dynamicdialog';
+import { MealsService } from 'src/app/services/meals.service';
 
 @Component({
   selector: 'app-addmeal',
@@ -11,17 +12,9 @@ import {DynamicDialogConfig} from 'primeng/dynamicdialog';
   styleUrls: ['./addmeal.component.scss'],
 })
 export class AddmealComponent implements OnInit {
-  @ViewChild('content') content : ElementRef | undefined;
-  rHours = new Map<Meals.mealType, String>();
+  @ViewChild('content') content: ElementRef | undefined;
 
-  hours = [
-    { moment: Meals.mealType.Dejeuner, name: 'Déjeuner', color: 'green' },
-    { moment: Meals.mealType.DixHeure, name: '10h', color: 'red' },
-    { moment: Meals.mealType.Diner, name: 'Dîner', color: 'yellow' },
-    { moment: Meals.mealType.SeizeHeure, name: '16h', color: 'blue' },
-    { moment: Meals.mealType.Souper, name: 'Souper', color: 'teal' },
-  ];
-  selectedHour= this.hours[0];
+  selectedHour = this.mealService.hours[0];
   filteredHours: any[] = [];
   aMeal: Meals.meal = {
     date: '',
@@ -29,45 +22,48 @@ export class AddmealComponent implements OnInit {
     moment: Meals.mealType.Dejeuner,
   };
   dateRepas: Date = new Date();
-  selectedValue : string = '';
-  constructor(private mainService: MainService, private categorieService: CategoriesService, public ref: DynamicDialogRef, public config: DynamicDialogConfig) {}
+  selectedValue: string = '';
+  constructor(
+    private mainService: MainService,
+    private categorieService: CategoriesService,
+    public mealService: MealsService,
+    public ref: DynamicDialogRef,
+    public config: DynamicDialogConfig
+  ) {}
 
   getHourIndex = (amoment: Meals.mealType) => {
-    const index = this.hours.map(hour => {return hour.moment}).indexOf(amoment);
+    const index = this.mealService.hours
+      .map((hour) => {
+        return hour.moment;
+      })
+      .indexOf(amoment);
     return index;
-  }
+  };
 
   ngOnInit(): void {
-    this.rHours.set(Meals.mealType.Dejeuner, 'Déjeuner');
-    this.rHours.set(Meals.mealType.DixHeure, '10h');
-    this.rHours.set(Meals.mealType.Diner, 'Dîner');
-    this.rHours.set(Meals.mealType.SeizeHeure, '16h');
-    this.rHours.set(Meals.mealType.Souper, 'Souper');
-    console.log('config ',this.config.data)
-    const {data} = this.config;
+    console.log('config ', this.config.data);
+    const { data } = this.config;
     if (data.aMeal) {
-      this.selectedHour = this.hours[this.getHourIndex(data.aMeal.moment)];
+      this.selectedHour = this.mealService.hours[this.getHourIndex(data.aMeal.moment)];
       this.dateRepas = new Date(data.aMeal.date);
       this.aMeal = data.aMeal;
     }
-    setTimeout(()=>{ // this will make the execution after the above boolean has changed
+    setTimeout(() => {
+      // this will make the execution after the above boolean has changed
       this.content?.nativeElement.focus();
-    },0);
-
+    }, 0);
   }
 
   close = () => {
     this.ref.close();
-  }
+  };
 
-
-
-  saveMeal =async  (event: MouseEvent) => {
-    const jour = this.dateRepas.getDate().toString().padStart(2,'0');
-    const mois = (this.dateRepas.getMonth()+1).toString().padStart(2,'0');
+  saveMeal = async (event: MouseEvent) => {
+    const jour = this.dateRepas.getDate().toString().padStart(2, '0');
+    const mois = (this.dateRepas.getMonth() + 1).toString().padStart(2, '0');
     const annee = this.dateRepas.getFullYear().toString();
     const sdate = `${annee}-${mois}-${jour}`;
-    console.log('date:',sdate)
+    console.log('date:', sdate);
     this.aMeal = {
       date: sdate,
       moment: this.selectedHour.moment,
@@ -75,14 +71,11 @@ export class AddmealComponent implements OnInit {
     };
     var id = '';
     if (this.config.data.mode === 0) {
-    id = await this.categorieService.putMeal(this.aMeal);
-    console.log('saveMeal [this.aMeal]', id);
-
-    }
-    else {
-      id = this.config.data.aMeal.id
-      this.categorieService.updateMeal(id,this.aMeal);
-
+      id = await this.categorieService.putMeal(this.aMeal);
+      console.log('saveMeal [this.aMeal]', id);
+    } else {
+      id = this.config.data.aMeal.id;
+      this.categorieService.updateMeal(id, this.aMeal);
     }
     this.ref.close(id);
   };

@@ -13,7 +13,7 @@
         <div class="p-mb-2">
           <label for="Hour">Heure</label>
           <p-dropdown
-            [options]="hours"
+            [options]="mealService.hours"
             [(ngModel)]="selectedHour"
             optionLabel="name"
             [showClear]="true"

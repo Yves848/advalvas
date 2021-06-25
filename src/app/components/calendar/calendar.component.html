@@ -14,7 +14,7 @@
       <div class="p-fluid p-formgrid p-grid">
         <div class="p-field p-col">
           <label for="Hour">Heure</label>
-          <p-dropdown [options]="hours" [(ngModel)]="selectedHour"  optionLabel="name" [showClear]="true"></p-dropdown>
+          <p-dropdown [options]="mealService.hours" [(ngModel)]="selectedHour"  optionLabel="name" [showClear]="true"></p-dropdown>
         </div>
         <div class="p-field p-col">
           <label for="repas">Repas</label>

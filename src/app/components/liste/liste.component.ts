@@ -7,6 +7,7 @@ import { CategoriesService } from '../../services/categories.service';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AddmealComponent } from '../addmeal/addmeal.component';
 
+
 @Component({
   selector: 'app-liste',
   templateUrl: './liste.component.html',
@@ -28,6 +29,10 @@ export class ListeComponent implements OnInit, OnDestroy {
   onPlusClick = (id: string) => {
     console.log('click', id);
   };
+
+  scrapeClick =async  () => {
+
+  }
 
   onMinusClick = (id: string) => {
     console.log('minusclick', id);
