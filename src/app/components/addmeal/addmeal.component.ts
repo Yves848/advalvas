@@ -31,12 +31,24 @@ export class AddmealComponent implements OnInit {
   selectedValue : string = '';
   constructor(private mainService: MainService, private categorieService: CategoriesService, public ref: DynamicDialogRef, public config: DynamicDialogConfig) {}
 
+  getHourIndex = (amoment: Meals.mealType) => {
+    const index = this.hours.map(hour => {return hour.moment}).indexOf(amoment);
+    return index;
+  }
+
   ngOnInit(): void {
     this.rHours.set(Meals.mealType.Dejeuner, 'Déjeuner');
     this.rHours.set(Meals.mealType.DixHeure, '10h');
     this.rHours.set(Meals.mealType.Diner, 'Dîner');
     this.rHours.set(Meals.mealType.SeizeHeure, '16h');
     this.rHours.set(Meals.mealType.Souper, 'Souper');
+    console.log('config ',this.config.data)
+    const {data} = this.config;
+    if (data.aMeal) {
+      this.selectedHour = this.hours[this.getHourIndex(data.aMeal.moment)];
+      this.dateRepas = new Date(data.aMeal.date);
+      this.aMeal = data.aMeal;
+    }
 
   }
 
@@ -50,15 +62,24 @@ export class AddmealComponent implements OnInit {
     const jour = this.dateRepas.getDate().toString().padStart(2,'0');
     const mois = (this.dateRepas.getMonth()+1).toString().padStart(2,'0');
     const annee = this.dateRepas.getFullYear().toString();
-    const sdate = `${annee}:${mois}:${jour}`;
+    const sdate = `${annee}-${mois}-${jour}`;
     console.log('date:',sdate)
     this.aMeal = {
       date: sdate,
       moment: this.selectedHour.moment,
       content: this.aMeal.content,
     };
-    const id = await this.categorieService.putMeal(this.aMeal);
+    var id = '';
+    if (this.config.data.mode === 0) {
+    id = await this.categorieService.putMeal(this.aMeal);
     console.log('saveMeal [this.aMeal]', id);
-    this.close();
+
+    }
+    else {
+      id = this.config.data.aMeal.id
+      this.categorieService.updateMeal(id,this.aMeal);
+
+    }
+    this.ref.close(id);
   };
 }

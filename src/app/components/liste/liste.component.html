@@ -7,7 +7,7 @@
         style="width: 100%; text-align: center;"
         pButton
         label="Ajouter"
-        (click)= "show()"
+        (click)= "Add()"
       ></button>
     </div>
   </div>
@@ -27,7 +27,8 @@
             [ngClass]="{ row_dejeuner: event.moment === '08:00:00' }"
             [width]="90"
           >
-            <i class="pi pi-pencil myIcon"></i>
+            <i class="pi pi-pencil myIcon"
+            (click)="Edit(event)"></i>
             <i
               class="pi pi-minus-circle myIcon"
               (click)="onMinusClick(event.id)"

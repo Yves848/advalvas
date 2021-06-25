@@ -48,14 +48,36 @@ export class ListeComponent implements OnInit, OnDestroy {
     }
   }
 
-  show() {
+  Edit(event: meal) {
     this.ref = this.dialogService.open(AddmealComponent,{
+      data: {mode: 1,aMeal: event},
+      header: "Ajouter un repas",
+      width: '60rem',
+      contentStyle: {"max-height": "1100px", "overflow": "auto"},
+      baseZIndex: 10000
+    })
+    this.ref.onClose.subscribe((data: meal) => {
+      if (data) {
+          console.log("data",data)
+      }
+  });
+  }
+
+  Add() {
+    this.ref = this.dialogService.open(AddmealComponent,{
+      data: {mode: 0},
       header: "Ajouter un repas",
       width: '60rem',
       contentStyle: {"max-height": "1000px", "overflow": "auto"},
       baseZIndex: 10000
     })
+    this.ref.onClose.subscribe((id: any) => {
+      if (id) {
+          console.log("id",id)
+      }
+  });
   }
+
 
 
   getMeals = async () => {
