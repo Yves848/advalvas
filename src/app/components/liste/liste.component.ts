@@ -6,13 +6,14 @@ import { meal } from '../../interfaces/interfaces';
 import { CategoriesService } from '../../services/categories.service';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AddmealComponent } from '../addmeal/addmeal.component';
+import { MessageService } from 'primeng/api';
 
 
 @Component({
   selector: 'app-liste',
   templateUrl: './liste.component.html',
   styleUrls: ['./liste.component.scss'],
-  providers: [DialogService]
+  providers: [DialogService,MessageService]
 })
 export class ListeComponent implements OnInit, OnDestroy {
   EVENTS: meal[] = [];
@@ -23,12 +24,9 @@ export class ListeComponent implements OnInit, OnDestroy {
     public ws: MainService,
     private mealService: MealsService,
     private categService: CategoriesService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private messageService : MessageService
   ) {}
-
-  onPlusClick = (id: string) => {
-    console.log('click', id);
-  };
 
   scrapeClick =async  () => {
 
@@ -53,20 +51,29 @@ export class ListeComponent implements OnInit, OnDestroy {
     }
   }
 
+  rateChange = (event: any, aMeal: meal) => {
+    console.log('ratechange',event,aMeal)
+    aMeal.rating = event.value;
+    this.categService.updateMeal(<string>aMeal.id,aMeal);
+  }
+
   Edit(event: meal) {
-    this.ref = this.dialogService.open(AddmealComponent,{
+    const ref = this.dialogService.open(AddmealComponent,{
       data: {mode: 1,aMeal: event},
       header: "Ajouter un repas",
       width: '60rem',
       contentStyle: {"max-height": "1100px", "overflow": "auto"},
       baseZIndex: 10000
     })
-    this.ref.onClose.subscribe((data: meal) => {
+    ref.onClose.subscribe((data: meal) => {
       if (data) {
           console.log("data",data)
+          this.messageService.add({severity:'success', summary:'Modification du repas', detail: data.content});
       }
   });
   }
+
+
 
   Add() {
     this.ref = this.dialogService.open(AddmealComponent,{
@@ -76,9 +83,11 @@ export class ListeComponent implements OnInit, OnDestroy {
       contentStyle: {"max-height": "1000px", "overflow": "auto"},
       baseZIndex: 10000
     })
-    this.ref.onClose.subscribe((id: any) => {
-      if (id) {
-          console.log("id",id)
+
+    this.ref.onClose.subscribe((data: meal) => {
+      if (data) {
+          console.log("id",data.id)
+          this.messageService.add({severity:'success', summary:'Ajour du repas', detail: data.content});
       }
   });
   }

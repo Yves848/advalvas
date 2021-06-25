@@ -5,11 +5,13 @@ import { CategoriesService } from 'src/app/services/categories.service';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { MealsService } from 'src/app/services/meals.service';
+import { MessageService } from 'primeng/api'
 
 @Component({
   selector: 'app-addmeal',
   templateUrl: './addmeal.component.html',
   styleUrls: ['./addmeal.component.scss'],
+  providers:[MessageService]
 })
 export class AddmealComponent implements OnInit {
   @ViewChild('content') content: ElementRef | undefined;
@@ -24,6 +26,7 @@ export class AddmealComponent implements OnInit {
   dateRepas: Date = new Date();
   selectedValue: string = '';
   constructor(
+    private messageService: MessageService,
     private mainService: MainService,
     private categorieService: CategoriesService,
     public mealService: MealsService,
@@ -72,11 +75,12 @@ export class AddmealComponent implements OnInit {
     var id = '';
     if (this.config.data.mode === 0) {
       id = await this.categorieService.putMeal(this.aMeal);
+      this.messageService.add({severity:'success', summary:'Ajout du repas', detail: `${this.aMeal.date} - ${this.aMeal.content}`});
       console.log('saveMeal [this.aMeal]', id);
     } else {
       id = this.config.data.aMeal.id;
       this.categorieService.updateMeal(id, this.aMeal);
     }
-    this.ref.close(id);
+    this.ref.close(this.aMeal);
   };
 }

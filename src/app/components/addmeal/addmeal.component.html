@@ -18,10 +18,11 @@
             optionLabel="name"
             [showClear]="true"
           >
-        </p-dropdown>
-          <div class="p-mb-2" style="margin-top: 10px;">
+          </p-dropdown>
+          <div class="p-mb-2" style="margin-top: 10px">
             <label for="repas">Repas</label>
-            <input #content
+            <input
+              #content
               [(ngModel)]="aMeal.content"
               id="repas"
               type="text"
@@ -31,8 +32,6 @@
         </div>
       </div>
     </div>
-
-
   </div>
   <div class="p-mt-auto">
     <div class="p-d-flex p-jc-center">
@@ -50,3 +49,4 @@
     </div>
   </div>
 </div>
+
