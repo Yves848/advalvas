@@ -64,7 +64,7 @@
             {{ event.content }}
           </td>
           <td>
-            <p-rating (onRate)="rateChange($event,event)" [ngModel]="event.rating"></p-rating>
+            <p-rating (onRate)="rateChange($event,event)" (onCancel)="rateClean($event, event)" [ngModel]="event.rating"></p-rating>
           </td>
         </tr>
       </ng-template>

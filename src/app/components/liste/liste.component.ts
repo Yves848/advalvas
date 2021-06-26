@@ -57,6 +57,13 @@ export class ListeComponent implements OnInit, OnDestroy {
     this.categService.updateMeal(<string>aMeal.id,aMeal);
   }
 
+  rateClean = (event : any, aMeal : meal) => {
+    console.log('rateClean',event,aMeal)
+    aMeal.rating = 0;
+    this.categService.updateMeal(<string>aMeal.id,aMeal);
+  }
+
+
   Edit(event: meal) {
     const ref = this.dialogService.open(AddmealComponent,{
       data: {mode: 1,aMeal: event},
