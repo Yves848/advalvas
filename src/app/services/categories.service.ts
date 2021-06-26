@@ -15,7 +15,7 @@ export class CategoriesService {
   putMeal(aData: meal) {
     return new Promise<any>((resolve, reject) => {
       this.firestore.collection("meals").add(aData).then(res => {
-        console.log('Résultat : ',res);
+        //console.log('Résultat : ',res);
         resolve(res.id);
       }, err => reject(err))
     });

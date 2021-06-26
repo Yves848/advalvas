@@ -32,10 +32,10 @@ export class ListeComponent implements OnInit, OnDestroy {
 
   }
 
-  onMinusClick = (id: string) => {
+  onMinusClick = async (id: string) => {
     console.log('minusclick', id);
     this.categService.removeMeal(id);
-    this.getMeals();
+    await this.getMeals();
   };
 
   asyncForEach = async (anArray: any[], callbak: any) => {
@@ -100,8 +100,8 @@ export class ListeComponent implements OnInit, OnDestroy {
     var aRes: any[] = [];
     this.mealService.getMeals().subscribe(async (res) => {
       aRes = res;
-      console.log('res', aRes);
-      this.EVENTS = [];
+      //console.log('res', aRes);
+
       await this.asyncForEach(aRes, (element: any) => {
         const aMeal: Meals.meal = <Meals.meal>element.payload.doc.data();
         aMeal.id = element.payload.doc.id;

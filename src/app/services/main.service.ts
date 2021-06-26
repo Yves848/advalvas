@@ -14,7 +14,7 @@ export class MainService {
     this.afAuth
       .createUserWithEmailAndPassword(email, password)
       .then(async (result) => {
-        console.log('result : ', result);
+        //console.log('result : ', result);
         this.user = await this.afAuth.currentUser;
         this.user.updateProfile({displayName: displayName});
         this.router.navigate(['']);
