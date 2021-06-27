@@ -8,6 +8,7 @@ import { CalenComponent } from './components/calendar/calendar.component';
 import { ListeComponent } from './components/liste/liste.component';
 import { AddmealComponent } from './components/addmeal/addmeal.component';
 import { FlextestComponent } from './components/flextest/flextest.component';
+import { CategoryComponent } from './ads/components/categories/categories.component';
 
 
 
@@ -15,10 +16,10 @@ const routes: Routes = [
   {path: '', component: MainComponent},
   {path: 'signup',component: SignupComponent},
   {path: 'signin', component: SigninComponent},
-  {path: 'categories', component: CategoriesComponent},
+  {path: 'categories', component: CategoryComponent},
   {path: 'calendar', component: CalenComponent},
   {path: 'list', component: ListeComponent},
-  {path: 'addmeal',component: AddmealComponent}
+  {path: 'addmeal',component: AddmealComponent},
 
 ];
 @NgModule({

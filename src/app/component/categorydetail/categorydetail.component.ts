@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CategoriesService } from 'src/app/services/categories.service';
+import { MealsService } from 'src/app/services/meals.service';
 
 @Component({
   selector: 'app-categorydetail',
@@ -8,7 +8,7 @@ import { CategoriesService } from 'src/app/services/categories.service';
 })
 export class CategorydetailComponent implements OnInit {
 
-  constructor(public categoryService: CategoriesService) { }
+  constructor(public mealService: MealsService) { }
 
   ngOnInit(): void {
   }

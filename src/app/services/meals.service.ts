@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import * as meals  from '../interfaces/interfaces'
 import { AngularFirestore  } from '@angular/fire/firestore';
+import { meal, mealType } from '../interfaces/interfaces'
 
 
 @Injectable({
@@ -12,5 +12,23 @@ export class MealsService {
     return this.firestore.collection('meals').snapshotChanges();
   }
 
-  constructor(private firestore: AngularFirestore) { }
+  constructor(private firestore: AngularFirestore) {}
+
+  putMeal(aData: meal) {
+    return new Promise<any>((resolve, reject) => {
+      this.firestore.collection("meals").add(aData).then(res => {
+        console.log('Résultat : ',res);
+        resolve(res.id);
+      }, err => reject(err))
+    });
+  }
+
+  removeMeal(mealId : string) {
+    this.firestore.collection('meals').doc(mealId).delete();
+  }
+
+  updateMeal(id : string, aData : meal) {
+    this.firestore.collection('meals').doc(id).update(aData);
+  }
+
 }

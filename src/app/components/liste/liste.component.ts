@@ -3,7 +3,6 @@ import { MainService } from '../../services/main.service';
 import { MealsService } from '../../services/meals.service';
 import * as Meals from '../../interfaces/interfaces';
 import { meal } from '../../interfaces/interfaces';
-import { CategoriesService } from '../../services/categories.service';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AddmealComponent } from '../addmeal/addmeal.component';
 
@@ -21,7 +20,6 @@ export class ListeComponent implements OnInit, OnDestroy {
   constructor(
     public ws: MainService,
     private mealService: MealsService,
-    private categService: CategoriesService,
     private dialogService: DialogService
   ) {}
 
@@ -31,7 +29,7 @@ export class ListeComponent implements OnInit, OnDestroy {
 
   onMinusClick = (id: string) => {
     console.log('minusclick', id);
-    this.categService.removeMeal(id);
+    this.mealService.removeMeal(id);
     this.getMeals();
   };
 
