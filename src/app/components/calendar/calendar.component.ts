@@ -27,26 +27,8 @@ export class CalenComponent implements OnInit {
   anEvent: any;
   aMeal: Meals.meal = {date: "", content: "", moment: Meals.mealType.Dejeuner};
 
-  rHours = new Map<Meals.mealType,String>();
-
-  hours = [
-    { moment: Meals.mealType.Dejeuner, name: 'Déjeuner', color: 'green' },
-    { moment: Meals.mealType.DixHeure, name: '10h', color: 'red' },
-    { moment: Meals.mealType.Diner, name: 'Dîner', color: 'yellow' },
-    { moment: Meals.mealType.SeizeHeure, name: '16h', color: 'blue' },
-    { moment: Meals.mealType.Souper, name: 'Souper', color: 'teal' },
-  ];
   selectedHour: any;
   filteredHours: any[] = [];
-
-  getHourIndex = (amoment: Meals.mealType) => {
-    const index = this.hours.map(hour => {return hour.moment}).indexOf(amoment);
-    return index;
-  }
-
-  getHourColor = (aMoment: Meals.mealType) => {
-    return this.hours[this.getHourIndex(aMoment)].color;
-  }
 
   onClick(arg: EventClickArg) {
     const el = this.calendar?.getApi().getEventById(arg.event.id);
@@ -55,7 +37,7 @@ export class CalenComponent implements OnInit {
     this.aMeal = <Meals.meal>arg.event.extendedProps.meal;
     console.log('aMeal', this.aMeal);
     //this.selectedHour = this.rHours.get(this.aMeal.moment);
-    this.selectedHour = this.hours[this.getHourIndex(this.aMeal.moment)];
+    this.selectedHour = this.mealService.hours[this.mealService.getHourIndex(this.aMeal.moment)];
     console.log('this.selectedHour',this.selectedHour)
     this.op?.toggle(arg.event, arg.el);
   }
@@ -68,8 +50,8 @@ export class CalenComponent implements OnInit {
     let filtered: any[] = [];
     let query = event.query;
 
-    for (let i = 0; i < this.hours.length; i++) {
-      let hour = this.hours[i];
+    for (let i = 0; i < this.mealService.hours.length; i++) {
+      let hour = this.mealService.hours[i];
       if (hour.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
         filtered.push(hour);
       }
@@ -152,7 +134,7 @@ export class CalenComponent implements OnInit {
 
   constructor(
     public mainService: MainService,
-    private mealService: MealsService,
+    public mealService: MealsService,
     private categService: CategoriesService,
     private router: Router
   ) {
@@ -186,11 +168,6 @@ export class CalenComponent implements OnInit {
 
   ngOnInit(): void {
     this.getMeals();
-    this.rHours.set(Meals.mealType.Dejeuner,"Déjeuner");
-    this.rHours.set(Meals.mealType.DixHeure,"10h");
-    this.rHours.set(Meals.mealType.Diner,"Dîner");
-    this.rHours.set(Meals.mealType.SeizeHeure,"16h");
-    this.rHours.set(Meals.mealType.Souper,"Souper");
 
   }
 }

@@ -5,12 +5,14 @@ import * as Meals from '../../interfaces/interfaces';
 import { meal } from '../../interfaces/interfaces';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AddmealComponent } from '../addmeal/addmeal.component';
+import { MessageService } from 'primeng/api';
+
 
 @Component({
   selector: 'app-liste',
   templateUrl: './liste.component.html',
   styleUrls: ['./liste.component.scss'],
-  providers: [DialogService]
+  providers: [DialogService,MessageService]
 })
 export class ListeComponent implements OnInit, OnDestroy {
   EVENTS: meal[] = [];
@@ -20,14 +22,15 @@ export class ListeComponent implements OnInit, OnDestroy {
   constructor(
     public ws: MainService,
     private mealService: MealsService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private messageService: MessageService
   ) {}
 
-  onPlusClick = (id: string) => {
-    console.log('click', id);
-  };
+  scrapeClick =async  () => {
 
-  onMinusClick = (id: string) => {
+  }
+
+  onMinusClick = async (id: string) => {
     console.log('minusclick', id);
     this.mealService.removeMeal(id);
     this.getMeals();
@@ -46,14 +49,54 @@ export class ListeComponent implements OnInit, OnDestroy {
     }
   }
 
-  show() {
+  rateChange = (event: any, aMeal: meal) => {
+    console.log('ratechange',event,aMeal)
+    aMeal.rating = event.value;
+    this.categService.updateMeal(<string>aMeal.id,aMeal);
+  }
+
+  rateClean = (event : any, aMeal : meal) => {
+    console.log('rateClean',event,aMeal)
+    aMeal.rating = 0;
+    this.categService.updateMeal(<string>aMeal.id,aMeal);
+  }
+
+
+  Edit(event: meal) {
+    const ref = this.dialogService.open(AddmealComponent,{
+      data: {mode: 1,aMeal: event},
+      header: "Ajouter un repas",
+      width: '60rem',
+      contentStyle: {"max-height": "1100px", "overflow": "auto"},
+      baseZIndex: 10000
+    })
+    ref.onClose.subscribe((data: meal) => {
+      if (data) {
+          console.log("data",data)
+          this.messageService.add({severity:'success', summary:'Modification du repas', detail: data.content});
+      }
+  });
+  }
+
+
+
+  Add() {
     this.ref = this.dialogService.open(AddmealComponent,{
+      data: {mode: 0},
       header: "Ajouter un repas",
       width: '60rem',
       contentStyle: {"max-height": "1000px", "overflow": "auto"},
       baseZIndex: 10000
     })
+
+    this.ref.onClose.subscribe((data: meal) => {
+      if (data) {
+          console.log("id",data.id)
+          this.messageService.add({severity:'success', summary:'Ajour du repas', detail: data.content});
+      }
+  });
   }
+
 
 
   getMeals = async () => {
@@ -62,8 +105,8 @@ export class ListeComponent implements OnInit, OnDestroy {
     var aRes: any[] = [];
     this.mealService.getMeals().subscribe(async (res) => {
       aRes = res;
-      console.log('res', aRes);
-      this.EVENTS = [];
+      //console.log('res', aRes);
+
       await this.asyncForEach(aRes, (element: any) => {
         const aMeal: Meals.meal = <Meals.meal>element.payload.doc.data();
         aMeal.id = element.payload.doc.id;

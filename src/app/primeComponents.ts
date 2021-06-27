@@ -86,6 +86,7 @@ import {SkeletonModule} from 'primeng/skeleton';
 import { TagModule } from 'primeng/tag';
 import {TerminalModule} from 'primeng/terminal';
 import { RippleModule } from 'primeng/ripple';
+import { ToastModule } from 'primeng/toast';
 
 
 
@@ -190,7 +191,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     SkeletonModule,
     TagModule,
     TerminalModule,
-    RippleModule
+    RippleModule,
+    ToastModule
   ]
 })
 export class PrimeComponentsModule { }
