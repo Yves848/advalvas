@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import * as Meals from '../../interfaces/interfaces';
 import { MainService } from '../../services/main.service';
-import {DynamicDialogRef} from 'primeng/dynamicdialog';
-import {DynamicDialogConfig} from 'primeng/dynamicdialog';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { MealsService } from 'src/app/services/meals.service';
 import { MessageService } from 'primeng/api';
 
@@ -10,7 +10,7 @@ import { MessageService } from 'primeng/api';
   selector: 'app-addmeal',
   templateUrl: './addmeal.component.html',
   styleUrls: ['./addmeal.component.scss'],
-  providers:[MessageService]
+  providers: [MessageService]
 })
 export class AddmealComponent implements OnInit {
   @ViewChild('content') content: ElementRef | undefined;
@@ -23,8 +23,8 @@ export class AddmealComponent implements OnInit {
     moment: Meals.mealType.Dejeuner,
   };
   dateRepas: Date = new Date();
-  selectedValue : string = '';
-  constructor(private mainService: MainService,private mealService: MealsService, public ref: DynamicDialogRef, public config: DynamicDialogConfig) {}
+  selectedValue: string = '';
+  constructor(private mainService: MainService, public mealService: MealsService, public ref: DynamicDialogRef, public config: DynamicDialogConfig) { }
 
   getHourIndex = (amoment: Meals.mealType) => {
     const index = this.mealService.hours

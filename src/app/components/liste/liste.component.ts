@@ -52,13 +52,13 @@ export class ListeComponent implements OnInit, OnDestroy {
   rateChange = (event: any, aMeal: meal) => {
     console.log('ratechange',event,aMeal)
     aMeal.rating = event.value;
-    this.categService.updateMeal(<string>aMeal.id,aMeal);
+    this.mealService.updateMeal(<string>aMeal.id,aMeal);
   }
 
   rateClean = (event : any, aMeal : meal) => {
     console.log('rateClean',event,aMeal)
     aMeal.rating = 0;
-    this.categService.updateMeal(<string>aMeal.id,aMeal);
+    this.mealService.updateMeal(<string>aMeal.id,aMeal);
   }
 
 
