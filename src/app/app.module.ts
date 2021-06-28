@@ -22,7 +22,9 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { AddmealComponent } from './components/addmeal/addmeal.component';
 import { ListeComponent } from './components/liste/liste.component';
-import { FlextestComponent } from './components/flextest/flextest.component'; // a plugin
+import { FlextestComponent } from './components/flextest/flextest.component';
+import { IndexComponent } from './ads/components/index/index.component'; // a plugin
+import { CategoryComponent } from './ads/components/categories/categories.component';
 
 
 const firebaseConfig = {
@@ -55,7 +57,9 @@ FullCalendarModule.registerPlugins([
     CalenComponent,
     AddmealComponent,
     ListeComponent,
-    FlextestComponent
+    FlextestComponent,
+    IndexComponent,
+    CategoryComponent
   ],
   imports: [
     BrowserModule,

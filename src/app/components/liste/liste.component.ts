@@ -3,7 +3,6 @@ import { MainService } from '../../services/main.service';
 import { MealsService } from '../../services/meals.service';
 import * as Meals from '../../interfaces/interfaces';
 import { meal } from '../../interfaces/interfaces';
-import { CategoriesService } from '../../services/categories.service';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AddmealComponent } from '../addmeal/addmeal.component';
 import { MessageService } from 'primeng/api';
@@ -23,15 +22,14 @@ export class ListeComponent implements OnInit, OnDestroy {
   constructor(
     public ws: MainService,
     private mealService: MealsService,
-    private categService: CategoriesService,
     private dialogService: DialogService,
-    private messageService : MessageService
+    private messageService: MessageService
   ) {}
 
   onMinusClick = async (id: string) => {
     console.log('minusclick', id);
-    this.categService.removeMeal(id);
-    await this.getMeals();
+    this.mealService.removeMeal(id);
+    this.getMeals();
   };
 
   asyncForEach = async (anArray: any[], callbak: any) => {
@@ -49,12 +47,12 @@ export class ListeComponent implements OnInit, OnDestroy {
 
   rateChange = (event: any, aMeal: meal) => {
     aMeal.rating = event.value;
-    this.categService.updateMeal(<string>aMeal.id,aMeal);
+    this.mealService.updateMeal(<string>aMeal.id,aMeal);
   }
 
   rateClean = (event : any, aMeal : meal) => {
     aMeal.rating = 0;
-    this.categService.updateMeal(<string>aMeal.id,aMeal);
+    this.mealService.updateMeal(<string>aMeal.id,aMeal);
   }
 
 

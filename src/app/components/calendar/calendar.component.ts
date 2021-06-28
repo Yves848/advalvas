@@ -80,7 +80,7 @@ export class CalenComponent implements OnInit {
     eventObj?.setStart(`${this.aMeal.date}T${this.selectedHour.moment}`)
     eventObj?.setExtendedProp('meal',this.aMeal);
     eventObj?.setProp('title',this.aMeal.content);
-    this.categService.updateMeal(this.id,this.aMeal);
+    this.mealService.updateMeal(this.id,this.aMeal);
     this.op?.toggle(anEvent.event, anEvent.el);
   }
 
@@ -116,7 +116,7 @@ export class CalenComponent implements OnInit {
     const anEvent = <EventClickArg>this.anEvent;
     this.op?.toggle(anEvent.event, anEvent.el);
     eventObj?.remove();
-    this.categService.removeMeal(this.id);
+    this.mealService.removeMeal(this.id);
   };
 
   addEvent = () => {
@@ -129,7 +129,7 @@ export class CalenComponent implements OnInit {
       moment: Meals.mealType.Dejeuner,
       content: `${args.dateStr} Event`,
     };
-    this.categService.putMeal(aData);
+    this.mealService.putMeal(aData);
   }
 
   constructor(
