@@ -9,27 +9,26 @@ import { iCateg } from '../../interfaces/iCategories';
 })
 export class CategoryComponent implements OnInit {
   categs: iCateg[] = [];
-  selectedCateg : iCateg | undefined;
+  selectedCateg: iCateg | undefined;
   constructor(public CS: CategoriesService) {}
 
   showSub = (categ?: iCateg) => {
+    var aCateg: iCateg;
     if (categ) {
-      var aCateg: iCateg;
       if (categ!.name === 'Précédent') {
-        aCateg = this.selectedCateg!;
-
+        aCateg = categ.parent!;
       } else {
-        aCateg = categ;
+        aCateg = categ!;
       }
-      this.selectedCateg = categ;
-      console.log('categ', categ)
-      console.log('aCateg',aCateg);
-      console.log('selectedCateg', this.selectedCateg)
+
+      console.log('categ', categ);
+      console.log('aCateg', aCateg);
+      console.log('selectedCateg', this.selectedCateg);
       this.categs = [];
-      if (aCateg!.subCategories) {
+      if (aCateg && aCateg.subCategories) {
         this.categs.push({
           name: 'Précédent',
-          parent: categ!,
+          parent: this.selectedCateg,
         });
 
         aCateg!.subCategories!.forEach((categ: iCateg) => {
@@ -46,10 +45,12 @@ export class CategoryComponent implements OnInit {
         this.categs.push(categ);
       });
     }
+    this.selectedCateg = categ;
   };
 
   async ngOnInit() {
     await this.CS.getCategs();
+    console.log("cs.categ",this.CS.categ)
     this.showSub();
   }
 }
