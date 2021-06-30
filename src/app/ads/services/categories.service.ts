@@ -8,7 +8,7 @@ import { iCateg } from '../interfaces/iCategories'
   providedIn: 'root'
 })
 export class CategoriesService {
-  categ: iCateg[] = [];
+  categs: iCateg[] = [];
   constructor(private httpClient : HttpClient) { }
 
   getCategs = async() => {
@@ -17,6 +17,6 @@ export class CategoriesService {
     //   console.log('categs',this.categ)
     // })
 
-    this.categ = await this.httpClient.get<iCateg[]>("assets/data/categories.json").toPromise();
+    this.categs = await this.httpClient.get<iCateg[]>("assets/data/categories.json").toPromise();
   }
 }

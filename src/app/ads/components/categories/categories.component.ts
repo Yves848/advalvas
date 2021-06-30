@@ -10,47 +10,54 @@ import { iCateg } from '../../interfaces/iCategories';
 export class CategoryComponent implements OnInit {
   categs: iCateg[] = [];
   selectedCateg: iCateg | undefined;
+  id: number = 0;
   constructor(public CS: CategoriesService) {}
 
-  showSub = (categ?: iCateg) => {
-    var aCateg: iCateg;
-    if (categ) {
-      if (categ!.name === 'Précédent') {
-        aCateg = categ.parent!;
-      } else {
-        aCateg = categ!;
-      }
+  asyncForEach = async (array: any, callback: any) => {
+    for (let index = 0; index < array.length; index++) {
+      await callback(array[index], index, array);
+    }
+  };
 
-      console.log('categ', categ);
-      console.log('aCateg', aCateg);
-      console.log('selectedCateg', this.selectedCateg);
-      this.categs = [];
-      if (aCateg && aCateg.subCategories) {
-        this.categs.push({
-          name: 'Précédent',
-          parent: this.selectedCateg,
-        });
-
-        aCateg!.subCategories!.forEach((categ: iCateg) => {
-          this.categs.push(categ);
-        });
-      } else {
-        this.CS.categ.forEach((categ: iCateg) => {
-          this.categs.push(categ);
-        });
+  getCategs = async (aCategs: iCateg[], parent?: iCateg) => {
+    await this.asyncForEach(aCategs, async (categ: iCateg) => {
+      categ.id = this.id;
+      if (parent) {
+        categ.parent = parent;
       }
+      this.id++;
+      if (categ.subCategories) {
+        await this.getCategs(categ.subCategories, categ);
+      }
+    });
+  };
+
+  showSub = async (aCategs?: iCateg[], pcateg?: iCateg) => {
+    console.log('aCateg, pcateg', aCategs, pcateg);
+    var tempCategs: iCateg[] = [];
+    if (pcateg && pcateg!.id === -1) {
+      tempCategs = pcateg?.parent?.subCategories!;
+      //pcateg = undefined;
     } else {
-      this.categs = [];
-      this.CS.categ.forEach((categ: iCateg) => {
-        this.categs.push(categ);
+      tempCategs = aCategs!;
+    }
+
+    this.categs = [];
+    if (pcateg) {
+      this.categs.push({
+        name: 'Précédent',
+        parent: pcateg,
+        id: -1,
       });
     }
-    this.selectedCateg = categ;
+    await this.asyncForEach(tempCategs, async (categ: iCateg) => {
+      this.categs.push(categ);
+    });
   };
 
   async ngOnInit() {
     await this.CS.getCategs();
-    console.log("cs.categ",this.CS.categ)
-    this.showSub();
+    await this.getCategs(this.CS.categs);
+    await this.showSub(this.CS.categs);
   }
 }
