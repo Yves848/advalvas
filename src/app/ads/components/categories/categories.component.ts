@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CategoriesService } from 'src/app/ads/services/categories.service';
-import { iCateg } from '../../interfaces/iCategories';
+import { iCateg, iCateg2 } from '../../interfaces/iCategories';
+import { MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'app-categories',
@@ -8,8 +9,10 @@ import { iCateg } from '../../interfaces/iCategories';
   styleUrls: ['./categories.component.scss'],
 })
 export class CategoryComponent implements OnInit {
-  categs: iCateg[] = [];
-  selectedCateg: iCateg | undefined;
+  items: MenuItem[] = [];
+  home: MenuItem = { icon: 'pi pi-home', routerLink: '/categories' };
+  categs: iCateg2[] = [];
+  selectedCateg: iCateg2 | undefined;
   id: number = 0;
   constructor(public CS: CategoriesService) {}
 
@@ -19,122 +22,73 @@ export class CategoryComponent implements OnInit {
     }
   };
 
-  getCategs = async (aCategs: iCateg[], parent?: iCateg) => {
-    await this.asyncForEach(aCategs, async (categ: iCateg) => {
-      categ.id = this.id;
-      categ.parent = parent;
-      this.id++;
-      if (categ.subCateg) {
-        await this.getCategs(categ.subCateg, categ.parent);
-      }
+  findCateg = (id: string) => {
+    var i: number;
+    console.log(id);
+    const labels = this.CS.categs.map((categ) => {
+      return categ.id;
     });
+    i = labels.indexOf(id);
+    return this.CS.categs[i].name;
   };
 
-  showSub2 = async (pCateg?: iCateg) => {
-    var tCategs: iCateg[] = [];
-    var parent: iCateg;
-
-    console.log('pCateg', pCateg);
-
-    if (pCateg) {
-      if (pCateg.id === -1) {
-        if (pCateg.parent?.parent) {
-          console.log('Précédent',pCateg)
-          tCategs = pCateg.parent!.parent!.subCateg!;
-        }
-        else {
-          tCategs = tCategs = this.CS.categs;
-        }
-
-      } else {
-        tCategs = pCateg!.subCateg!;
-      }
-    } else {
-      tCategs = this.CS.categs;
-    }
-
-    this.categs = [];
-    if (pCateg) {
-      if (pCateg.id !== -1)
-      {
-      this.categs.push({
-        id: -1,
-        name: 'Précédent',
-        parent: pCateg,
+  findRoute = (id: string) => {
+    var tempKeys: String[];
+    var re = /(\d{3})/;
+    tempKeys = id.split(re).filter((item) => {
+      return item.length > 0;
+    });
+    var i = 0;
+    var tempKey: String = '';
+    this.items = [];
+    while (i <= tempKeys.length - 1) {
+      tempKey = tempKey.concat(<string>tempKeys[i]);
+      const label = this.findCateg(<string>tempKey);
+      console.log('label', label);
+      this.items.push({
+        label: label,
       });
+      i++;
     }
+  };
+
+  showSub2 = async (pCateg?: iCateg2) => {
+    var lenKey = 3;
+    var tempCategs: iCateg2[] = [];
+    const categs = this.CS.categs;
+
+    if (pCateg) {
+      this.findRoute(pCateg!.id);
     }
 
-    await this.asyncForEach(tCategs, async (categ: iCateg) => {
-      //console.log('asyncForEach', categ);
+    tempCategs = categs.filter((categ) => {
       if (pCateg) {
-        categ.parent = pCateg!;
+        lenKey = pCateg.id.length + 3;
       }
-      this.categs.push(categ);
+      var isIncluded = lenKey === categ.id.length;
+      if (isIncluded && pCateg) {
+        isIncluded =
+          isIncluded && categ.id.substr(0, pCateg.id.length) === pCateg.id;
+      }
+      return isIncluded;
     });
-    console.log('this.categs', this.categs);
-  };
 
-  /*
-  showSub = async (aCategs?: iCateg[], pcateg?: iCateg) => {
-    console.log(
-      '###############################################################'
-    );
-    console.log('ShowSub aCateg', aCategs);
-    //console.log('ShowSub pcateg',pcateg);
-    var tempCategs: iCateg[] | undefined;
-
-    this.categs = [];
-    if (pcateg) {
-      console.log(`Id: ${pcateg.id}`, pcateg);
-      if (pcateg.id === -1) {
-        console.log('click sur Précédent');
-        if (pcateg.parent?.parent!) {
-          console.log('un');
-          if (pcateg.parent!.subCateg) {
-            console.log('deux');
-            tempCategs = pcateg.parent!.parent.subCateg;
-          } else {
-            tempCategs = this.CS.categs;
-          }
-        } else {
-          tempCategs = this.CS.categs;
-        }
-      } else {
-        if (aCategs) {
-          tempCategs = [];
-          console.log('[1] aCategs', aCategs);
-          var parent: iCateg[] | undefined;
-          if (pcateg) {
-            parent = pcateg.parent?.subCateg;
-          } else {
-            parent = this.CS.categs;
-          }
-          tempCategs!.push({
-            name: 'Précédent',
-            parent: pcateg,
-            id: -1,
-          });
-          tempCategs!.push(...aCategs!);
-        } else {
-          tempCategs = this.CS.categs;
-        }
-      }
+    if (tempCategs.length === 0) {
+      // Plus de sous-catégorie.
     } else {
-      // premier appel, Afficher la racine, sans élément parent.
-      console.log('[2] aCategs', aCategs);
-      tempCategs = aCategs!;
+      this.categs = tempCategs;
+      if (pCateg && pCateg!.id.length >= 3) {
+        this.categs.splice(0, 0, {
+          id: pCateg!.id.substr(0, pCateg!.id.length - 3),
+          name: 'Précédent',
+        });
+      }
     }
-    await this.asyncForEach(tempCategs, async (categ: iCateg) => {
-      console.log('asyncForEach', categ);
-      categ.parent = pcateg;
-      this.categs.push(categ);
-    });
   };
-*/
+
   async ngOnInit() {
     await this.CS.getCategs();
-    await this.getCategs(this.CS.categs);
+
     await this.showSub2();
   }
 }

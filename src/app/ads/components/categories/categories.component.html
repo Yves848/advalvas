@@ -1,3 +1,7 @@
+<div >
+  <p-badge *ngFor="let item of items" value={{item.label}} class="badge">  </p-badge>
+</div>
 <ul>
 <li *ngFor="let categ of categs" (click)="showSub2(categ)">{{categ.name}}</li>
 </ul>
+

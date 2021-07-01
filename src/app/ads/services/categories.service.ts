@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
-import { iCateg } from '../interfaces/iCategories'
+import { iCateg, iCateg2 } from '../interfaces/iCategories'
 
 
 
@@ -8,10 +8,11 @@ import { iCateg } from '../interfaces/iCategories'
   providedIn: 'root'
 })
 export class CategoriesService {
-  categs: iCateg[] = [];
+  categs: iCateg2[] = [];
   constructor(private httpClient : HttpClient) { }
 
   getCategs = async() => {
-    this.categs = await this.httpClient.get<iCateg[]>("assets/data/categories.json").toPromise();
+    this.categs = await this.httpClient.get<iCateg2[]>("assets/data/categories.json").toPromise();
+    console.log(this.categs)
   }
 }
