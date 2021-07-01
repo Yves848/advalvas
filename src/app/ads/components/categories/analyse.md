@@ -6,6 +6,21 @@ ShowSub(aCateg[]?, pcateg?)
     {
       
     }
+    SINON
+    {
+
+    }
   }
 
+}
+
+
+getCategs(aCategs: [], parent?)
+{
+  i = 0
+  TANT QUE i < aCateg.length
+  {
+    
+    i++
+  }
 }

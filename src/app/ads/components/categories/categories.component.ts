@@ -22,38 +22,46 @@ export class CategoryComponent implements OnInit {
   getCategs = async (aCategs: iCateg[], parent?: iCateg) => {
     await this.asyncForEach(aCategs, async (categ: iCateg) => {
       categ.id = this.id;
-      if (parent) {
-        categ.parent = parent;
-      }
+      categ.parent = parent;
       this.id++;
       if (categ.subCategories) {
-        await this.getCategs(categ.subCategories, categ);
+        await this.getCategs(categ.subCategories, categ.parent);
       }
     });
   };
 
   showSub = async (aCategs?: iCateg[], pcateg?: iCateg) => {
-    console.log('###############################################################')
-    console.log('ShowSub aCateg',aCategs);
+    console.log(
+      '###############################################################'
+    );
+    console.log('ShowSub aCateg', aCategs);
     //console.log('ShowSub pcateg',pcateg);
     var tempCategs: iCateg[] | undefined;
 
     this.categs = [];
     if (pcateg) {
-      console.log(`Id: ${pcateg.id}` , pcateg);
+      console.log(`Id: ${pcateg.id}`, pcateg);
       if (pcateg.id === -1) {
         console.log('click sur Précédent');
-        tempCategs = pcateg.parent!.parent!.subCategories;
+        if (pcateg.parent?.parent!) {
+          console.log('un');
+          if (pcateg.parent!.subCategories) {
+            console.log('deux');
+            tempCategs = pcateg.parent!.parent.subCategories;
+          } else {
+            tempCategs = this.CS.categs;
+          }
+        } else {
+          tempCategs = this.CS.categs;
+        }
       } else {
         if (aCategs) {
           tempCategs = [];
           console.log('[1] aCategs', aCategs);
-          var parent : iCateg[] | undefined;
+          var parent: iCateg[] | undefined;
           if (pcateg) {
             parent = pcateg.parent?.subCategories;
-          }
-          else
-          {
+          } else {
             parent = this.CS.categs;
           }
           tempCategs!.push({
