@@ -24,12 +24,58 @@ export class CategoryComponent implements OnInit {
       categ.id = this.id;
       categ.parent = parent;
       this.id++;
-      if (categ.subCategories) {
-        await this.getCategs(categ.subCategories, categ.parent);
+      if (categ.subCateg) {
+        await this.getCategs(categ.subCateg, categ.parent);
       }
     });
   };
 
+  showSub2 = async (pCateg?: iCateg) => {
+    var tCategs: iCateg[] = [];
+    var parent: iCateg;
+
+    console.log('pCateg', pCateg);
+
+    if (pCateg) {
+      if (pCateg.id === -1) {
+        if (pCateg.parent?.parent) {
+          console.log('Précédent',pCateg)
+          tCategs = pCateg.parent!.parent!.subCateg!;
+        }
+        else {
+          tCategs = tCategs = this.CS.categs;
+        }
+
+      } else {
+        tCategs = pCateg!.subCateg!;
+      }
+    } else {
+      tCategs = this.CS.categs;
+    }
+
+    this.categs = [];
+    if (pCateg) {
+      if (pCateg.id !== -1)
+      {
+      this.categs.push({
+        id: -1,
+        name: 'Précédent',
+        parent: pCateg,
+      });
+    }
+    }
+
+    await this.asyncForEach(tCategs, async (categ: iCateg) => {
+      //console.log('asyncForEach', categ);
+      if (pCateg) {
+        categ.parent = pCateg!;
+      }
+      this.categs.push(categ);
+    });
+    console.log('this.categs', this.categs);
+  };
+
+  /*
   showSub = async (aCategs?: iCateg[], pcateg?: iCateg) => {
     console.log(
       '###############################################################'
@@ -45,9 +91,9 @@ export class CategoryComponent implements OnInit {
         console.log('click sur Précédent');
         if (pcateg.parent?.parent!) {
           console.log('un');
-          if (pcateg.parent!.subCategories) {
+          if (pcateg.parent!.subCateg) {
             console.log('deux');
-            tempCategs = pcateg.parent!.parent.subCategories;
+            tempCategs = pcateg.parent!.parent.subCateg;
           } else {
             tempCategs = this.CS.categs;
           }
@@ -60,7 +106,7 @@ export class CategoryComponent implements OnInit {
           console.log('[1] aCategs', aCategs);
           var parent: iCateg[] | undefined;
           if (pcateg) {
-            parent = pcateg.parent?.subCategories;
+            parent = pcateg.parent?.subCateg;
           } else {
             parent = this.CS.categs;
           }
@@ -85,10 +131,10 @@ export class CategoryComponent implements OnInit {
       this.categs.push(categ);
     });
   };
-
+*/
   async ngOnInit() {
     await this.CS.getCategs();
     await this.getCategs(this.CS.categs);
-    await this.showSub(this.CS.categs);
+    await this.showSub2();
   }
 }
