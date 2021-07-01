@@ -12,11 +12,6 @@ export class CategoriesService {
   constructor(private httpClient : HttpClient) { }
 
   getCategs = async() => {
-    // this.httpClient.get("assets/data/categories.json").subscribe(data =>{
-    //   this.categ = data;
-    //   console.log('categs',this.categ)
-    // })
-
     this.categs = await this.httpClient.get<iCateg[]>("assets/data/categories.json").toPromise();
   }
 }
