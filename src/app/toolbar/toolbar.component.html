@@ -24,6 +24,20 @@
   </div>
 
   <div class="p-toolbar-group-right">
+
+    <ng-template #userLoggedIn>
+      <h3 style="margin: 0px; padding: 0px">{{getTitle() }}</h3>
+    </ng-template>
+
+    <ng-template #noUser>
+      <h3 style="margin: 0px; padding: 0px">AdValvas</h3>
+    </ng-template>
+
+    <div *ngIf="mainService.user; then userLoggedIn else noUser">
+
+    </div>
+
+
     <button
       *ngIf="mainService.user === null"
       (click)="signIn()"
@@ -31,6 +45,15 @@
       pRipple
       type="button"
       label="S'identifier"
+      class="p-button-rounded p-button-warning btn"
+    ></button>
+    <button
+      *ngIf="mainService.user === null"
+      (click)="signUp()"
+      pButton
+      pRipple
+      type="button"
+      label="S'enregistrer"
       class="p-button-rounded p-button-warning btn"
     ></button>
     <button
@@ -43,16 +66,7 @@
       class="p-button-rounded p-button-warning btn"
     ></button>
 
-    <div *ngIf="mainService.user; then userLoggedIn else noUser">
 
-    </div>
 
-    <ng-template #userLoggedIn>
-      <h3 style="margin: 0px; padding: 0px">{{getTitle() }}</h3>
-    </ng-template>
-
-    <ng-template #noUser>
-      <h3 style="margin: 0px; padding: 0px">AdValvas</h3>
-    </ng-template>
   </div>
 </p-toolbar>

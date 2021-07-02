@@ -29,6 +29,10 @@ export class ToolbarComponent implements OnInit {
     this.router.navigate(['signin']);
   }
 
+  public signUp() {
+    this.router.navigate(['signup']);
+  }
+
   public goCalendar() {
     this.router.navigate(['calendar']);
   }
