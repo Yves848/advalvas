@@ -1,7 +1,12 @@
-<div >
-  <p-badge *ngFor="let item of items" value={{item.label}} class="badge">  </p-badge>
+<div>
+  <p-badge *ngFor="let item of items" value="{{ item.label }}" class="badge">
+  </p-badge>
 </div>
-<ul>
-<li *ngFor="let categ of categs" (click)="showSub2(categ)">{{categ.name}}</li>
-</ul>
+<div class="p-d-flex p-flex-column">
+  <div class="p-mb-2" *ngFor="let categ of categs" >
+    <button pButton label="{{categ.name}}" (click)="showSub2(categ)" class="p-button-rounded p-button-success btn"></button>
+  </div>
+
+</div>
+
 
