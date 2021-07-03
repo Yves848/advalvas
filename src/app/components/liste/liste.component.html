@@ -20,7 +20,8 @@
             <col style="width:5%">
             <col style="width:10%">
             <col style="width:10%">
-            <col style="width:60%">
+            <col style="width:30%">
+            <col style="width:30%">
             <col style="width:15%">
 
         </colgroup>
@@ -31,6 +32,7 @@
           <th>Date</th>
           <th>Heure</th>
           <th>Repas</th>
+          <th>Remarque</th>
           <th>Score</th>
         </tr>
       </ng-template>
@@ -62,6 +64,10 @@
           <td [ngClass]="{ row_dejeuner: event.moment === '08:00:00' }"
           [width]="800">
             {{ event.content }}
+          </td>
+          <td [ngClass]="{ row_dejeuner: event.moment === '08:00:00' }"
+          [width]="800">
+            {{ event.remarque }}
           </td>
           <td>
             <p-rating (onRate)="rateChange($event,event)" (onCancel)="rateClean($event, event)" [ngModel]="event.rating"></p-rating>

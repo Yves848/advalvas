@@ -59,7 +59,7 @@ export class ListeComponent implements OnInit, OnDestroy {
   Edit(event: meal) {
     const ref = this.dialogService.open(AddmealComponent,{
       data: {mode: 1,aMeal: event},
-      header: "Ajouter un repas",
+      header: "Editer un repas",
       width: '60rem',
       contentStyle: {"max-height": "1100px", "overflow": "auto"},
       baseZIndex: 10000

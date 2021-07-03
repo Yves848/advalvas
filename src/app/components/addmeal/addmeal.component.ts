@@ -14,7 +14,7 @@ import { MessageService } from 'primeng/api';
 })
 export class AddmealComponent implements OnInit {
   @ViewChild('content') content: ElementRef | undefined;
-
+  text1 : string = "";
   selectedHour = this.mealService.hours[0];
   filteredHours: any[] = [];
   aMeal: Meals.meal = {
@@ -54,6 +54,7 @@ export class AddmealComponent implements OnInit {
   };
 
   saveMeal = async (event: MouseEvent) => {
+    const {data} = this.config;
     const jour = this.dateRepas.getDate().toString().padStart(2, '0');
     const mois = (this.dateRepas.getMonth() + 1).toString().padStart(2, '0');
     const annee = this.dateRepas.getFullYear().toString();
@@ -63,9 +64,14 @@ export class AddmealComponent implements OnInit {
       date: sdate,
       moment: this.selectedHour.moment,
       content: this.aMeal.content,
+      remarque: this.aMeal.remarque
     };
-    const id = await this.mealService.putMeal(this.aMeal);
-    console.log('saveMeal [this.aMeal]', id);
+    if (data.mode === 0) {
+      const id = await this.mealService.putMeal(this.aMeal);
+    }
+    else {
+      await this.mealService.updateMeal(data.aMeal.id,this.aMeal);
+    }
     this.ref.close();
   };
 }

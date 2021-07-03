@@ -11,7 +11,8 @@ export interface meal {
   date: string,
   moment: mealType,
   content: string,
-  rating?: number
+  rating?: number,
+  remarque?: string
 }
 
 export interface event {
