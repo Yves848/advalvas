@@ -97,6 +97,7 @@ export class ListeComponent implements OnInit, OnDestroy {
     console.log('getMeals');
     const tempEvents: meal[] = [];
     var aRes: any[] = [];
+    /*
     this.mealService.getMeals().subscribe(async (res) => {
       aRes = res;
       //console.log('res', aRes);
@@ -121,7 +122,9 @@ export class ListeComponent implements OnInit, OnDestroy {
         if (t1 >= t2) return 1;
         else return -1;
       });
-    });
+    });*/
+    const events = await this.mealService.getMeals2();
+    console.log(events)
   };
 
   async ngOnInit() {

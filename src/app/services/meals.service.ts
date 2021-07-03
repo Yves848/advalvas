@@ -28,6 +28,17 @@ export class MealsService {
     return this.firestore.collection('meals').snapshotChanges();
   }
 
+  getMeals2() {
+    //return this.firestore.collection('meals').snapshotChanges();
+    var meals: meal[] = [];
+    this.firestore.collection('meals').ref.get().then(res => {
+
+      res.forEach(data => {
+        console.log(data.ref)
+      })
+    })
+  }
+
   constructor(private firestore: AngularFirestore) {}
 
   putMeal(aData: meal) {

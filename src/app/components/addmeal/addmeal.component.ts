@@ -5,6 +5,7 @@ import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { MealsService } from 'src/app/services/meals.service';
 import { MessageService } from 'primeng/api';
+import { not } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-addmeal',
@@ -21,6 +22,7 @@ export class AddmealComponent implements OnInit {
     date: '',
     content: '',
     moment: Meals.mealType.Dejeuner,
+    remarque: '',
   };
   dateRepas: Date = new Date();
   selectedValue: string = '';
@@ -42,6 +44,8 @@ export class AddmealComponent implements OnInit {
       this.selectedHour = this.mealService.hours[this.getHourIndex(data.aMeal.moment)];
       this.dateRepas = new Date(data.aMeal.date);
       this.aMeal = data.aMeal;
+      if (! this.aMeal.remarque)
+      { this.aMeal.remarque = ""}
     }
     setTimeout(() => {
       // this will make the execution after the above boolean has changed
