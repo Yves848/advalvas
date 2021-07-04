@@ -89,7 +89,7 @@ export class ListeComponent implements OnInit, OnDestroy {
         console.log('id', data.id);
         this.messageService.add({
           severity: 'success',
-          summary: 'Ajour du repas',
+          summary: 'Ajout du repas',
           detail: data.content,
         });
       }

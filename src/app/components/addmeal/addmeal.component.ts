@@ -54,7 +54,7 @@ export class AddmealComponent implements OnInit {
   }
 
   close = () => {
-    this.ref.close();
+    this.ref.close(undefined);
   };
 
   saveMeal = async (event: MouseEvent) => {
@@ -76,6 +76,6 @@ export class AddmealComponent implements OnInit {
     else {
       await this.mealService.updateMeal(data.aMeal.id,this.aMeal);
     }
-    this.ref.close();
+    this.ref.close(this.aMeal);
   };
 }

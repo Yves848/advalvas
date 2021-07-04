@@ -43,7 +43,7 @@ export class MealsService {
 
   constructor(private firestore: AngularFirestore) {}
 
-  putMeal(aData: meal) {
+  putMeal( aData: meal) {
     return new Promise<any>((resolve, reject) => {
       this.firestore.collection("meals").add(aData).then(res => {
         console.log('Résultat : ',res);
