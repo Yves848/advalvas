@@ -28,15 +28,17 @@ export class MealsService {
     return this.firestore.collection('meals').snapshotChanges();
   }
 
-  getMeals2() {
-    //return this.firestore.collection('meals').snapshotChanges();
+  async getMeals2() {
     var meals: meal[] = [];
-    this.firestore.collection('meals').ref.get().then(res => {
-
-      res.forEach(data => {
-        console.log(data.ref)
+    var ref = this.firestore.collection('meals');
+    var data = await ref.get().toPromise().then(snapshot => {
+      snapshot.forEach(doc => {
+        const item = doc.data();
+        meals.push(<meal>item);
+        //console.log(doc.data());
       })
     })
+    return meals;
   }
 
   constructor(private firestore: AngularFirestore) {}

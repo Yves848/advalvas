@@ -34,10 +34,13 @@ export class CategoryComponent implements OnInit {
 
   findRoute = (id: string) => {
     var tempKeys: String[];
+    // splitter la clé par blocs de 3 chiffres (avec RegEx)
     var re = /(\d{3})/;
+    // filtrer les clés "vides"
     tempKeys = id.split(re).filter((item) => {
       return item.length > 0;
     });
+
     var i = 0;
     var tempKey: String = '';
     this.items = [];
