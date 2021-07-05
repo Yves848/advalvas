@@ -74,8 +74,9 @@ export class AddmealComponent implements OnInit {
       const id = await this.mealService.putMeal(this.aMeal);
     }
     else {
+      console.log('id ',data.aMeal.id)
       await this.mealService.updateMeal(data.aMeal.id,this.aMeal);
     }
-    this.ref.close(this.aMeal);
+    this.ref.close({mode: data.mode,aMeal: this.aMeal});
   };
 }

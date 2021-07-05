@@ -6,6 +6,7 @@ import { meal } from '../../interfaces/interfaces';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AddmealComponent } from '../addmeal/addmeal.component';
 import { MessageService } from 'primeng/api';
+import { eventTupleToStore } from '@fullcalendar/core';
 
 @Component({
   selector: 'app-liste',
@@ -25,10 +26,18 @@ export class ListeComponent implements OnInit, OnDestroy {
     private messageService: MessageService
   ) {}
 
+  findEvent = (id: string) : number => {
+    console.log('findevent', this.EVENTS);
+    const index = this.EVENTS.map(event => event.id).indexOf(id);
+    return index;
+  }
+
   onMinusClick = async (id: string) => {
     console.log('minusclick', id);
+    const index = this.findEvent(id);
+    console.log(this.EVENTS[index].content);
+    this.EVENTS.splice(index,1)
     this.mealService.removeMeal(id);
-    this.getMeals();
   };
 
   asyncForEach = async (anArray: any[], callbak: any) => {
@@ -55,6 +64,7 @@ export class ListeComponent implements OnInit, OnDestroy {
   };
 
   Edit(event: meal) {
+    console.log('edit',event)
     const ref = this.dialogService.open(AddmealComponent, {
       data: { mode: 1, aMeal: event },
       header: 'Editer un repas',
@@ -75,6 +85,10 @@ export class ListeComponent implements OnInit, OnDestroy {
     });
   }
 
+  addevent = (event : meal) => {
+
+  }
+
   Add() {
     this.ref = this.dialogService.open(AddmealComponent, {
       data: { mode: 0 },
@@ -84,8 +98,11 @@ export class ListeComponent implements OnInit, OnDestroy {
       baseZIndex: 10000,
     });
 
-    this.ref.onClose.subscribe((data: meal) => {
+    this.ref.onClose.subscribe((data: any) => {
       if (data) {
+        this.getMeals();
+        const mode = data.mode;
+        console.log('data',data);
         console.log('id', data.id);
         this.messageService.add({
           severity: 'success',

@@ -33,7 +33,8 @@ export class MealsService {
     var ref = this.firestore.collection('meals');
     var data = await ref.get().toPromise().then(snapshot => {
       snapshot.forEach(doc => {
-        const item = doc.data();
+        let  item =<meal> doc.data();
+        item.id = doc.id;
         meals.push(<meal>item);
         //console.log(doc.data());
       })
