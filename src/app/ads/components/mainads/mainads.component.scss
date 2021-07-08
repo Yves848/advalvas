@@ -1,0 +1,35 @@
+.main-frame {
+  //border: 1px solid grey;
+  height: 70rem;
+}
+
+.toolbar {
+  width: 100%;
+}
+
+.title-frame {
+  //border: 1px dashed red;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.working-frame {
+  //border: 1px dotted blue;
+  height: 98%
+
+}
+
+.categ-frame, .ads-frame {
+  //border: 1px double green;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+
+.categ-frame {
+  width: 20rem;
+
+}
+
+.ads-frame {
+  width: 140rem;
+}

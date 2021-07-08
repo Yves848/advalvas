@@ -9,6 +9,12 @@ import { ListeComponent } from './components/liste/liste.component';
 import { AddmealComponent } from './components/addmeal/addmeal.component';
 import { FlextestComponent } from './components/flextest/flextest.component';
 import { CategoryComponent } from './ads/components/categories/categories.component';
+import { IndexComponent } from './ads/components/index/index.component';
+import { MainadsComponent } from './ads/components/mainads/mainads.component';
+import { NewadComponent } from './ads/components/newad/newad.component';
+
+
+
 
 
 
@@ -17,9 +23,11 @@ const routes: Routes = [
   {path: 'signup',component: SignupComponent},
   {path: 'signin', component: SigninComponent},
   {path: 'categories', component: CategoryComponent},
+  {path: 'categories2', component: MainadsComponent},
   {path: 'calendar', component: CalenComponent},
   {path: 'list', component: ListeComponent},
   {path: 'addmeal',component: AddmealComponent},
+  {path: 'test', component: NewadComponent }
 
 ];
 @NgModule({

@@ -26,11 +26,11 @@
   <div class="p-toolbar-group-right">
 
     <ng-template #userLoggedIn>
-      <h3 style="margin: 0px; padding: 0px">{{getTitle() }}</h3>
+      <h3 style="margin: 0px; padding: 0px; color: azure;">{{getTitle() }}</h3>
     </ng-template>
 
     <ng-template #noUser>
-      <h3 style="margin: 0px; padding: 0px">AdValvas</h3>
+      <h3 style="margin: 0px; padding: 0px; color: azure;">AdValvas</h3>
     </ng-template>
 
     <div *ngIf="mainService.user; then userLoggedIn else noUser">

@@ -25,6 +25,9 @@ import { ListeComponent } from './components/liste/liste.component';
 import { FlextestComponent } from './components/flextest/flextest.component';
 import { IndexComponent } from './ads/components/index/index.component'; // a plugin
 import { CategoryComponent } from './ads/components/categories/categories.component';
+import { MainadsComponent } from './ads/components/mainads/mainads.component';
+import { CateglistComponent } from './ads/components/categlist/categlist.component';
+import { NewadComponent } from './ads/components/newad/newad.component';
 
 
 const firebaseConfig = {
@@ -59,7 +62,10 @@ FullCalendarModule.registerPlugins([
     ListeComponent,
     FlextestComponent,
     IndexComponent,
-    CategoryComponent
+    CategoryComponent,
+    MainadsComponent,
+    CateglistComponent,
+    NewadComponent
   ],
   imports: [
     BrowserModule,

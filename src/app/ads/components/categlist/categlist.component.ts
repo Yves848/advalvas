@@ -4,18 +4,17 @@ import { iCateg2 } from '../../interfaces/iCategories';
 import { MenuItem } from 'primeng/api';
 
 @Component({
-  selector: 'app-categories',
-  templateUrl: './categories.component.html',
-  styleUrls: ['./categories.component.scss'],
+  selector: 'app-categlist',
+  templateUrl: './categlist.component.html',
+  styleUrls: ['./categlist.component.scss']
 })
-export class CategoryComponent implements OnInit {
+export class CateglistComponent implements OnInit {
   items: MenuItem[] = [];
   home: MenuItem = { icon: 'pi pi-home', routerLink: '/categories' };
   categs: iCateg2[] = [];
   selectedCateg: iCateg2 | undefined;
   id: number = 0;
   constructor(public CS: CategoriesService) {}
-
   asyncForEach = async (array: any, callback: any) => {
     for (let index = 0; index < array.length; index++) {
       await callback(array[index], index, array);
@@ -92,4 +91,5 @@ export class CategoryComponent implements OnInit {
     await this.CS.getCategs();
     await this.showSub2();
   }
+
 }

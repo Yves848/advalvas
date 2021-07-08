@@ -1,0 +1,5 @@
+<div class="p-d-flex p-flex-column">
+  <div class="p-mb-2" *ngFor="let categ of categs" >
+    <button pButton label="{{categ.name}}" (click)="showSub2(categ)" class="p-button-sm p-button-success btn"></button>
+  </div>
+</div>
