@@ -18,7 +18,7 @@ export class ToolbarComponent implements OnInit {
     public mainService: MainService,
     public auth: AngularFireAuth,
     public router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.mainService.checkLocalStorage();
@@ -41,12 +41,15 @@ export class ToolbarComponent implements OnInit {
     this.router.navigate(['list']);
   }
 
+  public goPoids() {
+    this.router.navigate(['poids']);
+  }
+
   getTitle = () => {
     if (this.mainService.user.displayName) {
       return `Advalvas - ${this.mainService.user.displayName}`;
     }
-    else
-    {
+    else {
       return `Advalvas`;
     }
 

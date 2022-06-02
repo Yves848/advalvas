@@ -21,6 +21,16 @@
       style="width: 10rem;"
       class="p-button-rounded p-button-primary btn"
     ></button>
+    <button
+      *ngIf="mainService.user !== null"
+      (click)="goPoids()"
+      pButton
+      pRipple
+      type="button"
+      label="Poids"
+      style="width: 10rem;"
+      class="p-button-rounded p-button-primary btn"
+    ></button>
   </div>
 
   <div class="p-toolbar-group-right">

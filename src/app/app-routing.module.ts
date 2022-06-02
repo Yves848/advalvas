@@ -12,6 +12,7 @@ import { CategoryComponent } from './ads/components/categories/categories.compon
 import { IndexComponent } from './ads/components/index/index.component';
 import { MainadsComponent } from './ads/components/mainads/mainads.component';
 import { NewadComponent } from './ads/components/newad/newad.component';
+import { PoidsComponent } from './components/poids/poids.component';
 
 
 
@@ -19,19 +20,20 @@ import { NewadComponent } from './ads/components/newad/newad.component';
 
 
 const routes: Routes = [
-  {path: '', component: MainComponent},
-  {path: 'signup',component: SignupComponent},
-  {path: 'signin', component: SigninComponent},
-  {path: 'categories', component: CategoryComponent},
-  {path: 'categories2', component: MainadsComponent},
-  {path: 'calendar', component: CalenComponent},
-  {path: 'list', component: ListeComponent},
-  {path: 'addmeal',component: AddmealComponent},
-  {path: 'test', component: NewadComponent }
+  { path: '', component: MainComponent },
+  { path: 'signup', component: SignupComponent },
+  { path: 'signin', component: SigninComponent },
+  { path: 'categories', component: CategoryComponent },
+  { path: 'categories2', component: MainadsComponent },
+  { path: 'calendar', component: CalenComponent },
+  { path: 'list', component: ListeComponent },
+  { path: 'addmeal', component: AddmealComponent },
+  { path: 'test', component: NewadComponent },
+  { path: 'poids', component: PoidsComponent }
 
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-exports: [RouterModule]
+  exports: [RouterModule]
 })
 export class AppRoutingModule { }

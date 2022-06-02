@@ -1,12 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MainService } from '../../services/main.service';
 import { MealsService } from '../../services/meals.service';
-import * as Meals from '../../interfaces/interfaces';
 import { meal } from '../../interfaces/interfaces';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AddmealComponent } from '../addmeal/addmeal.component';
 import { MessageService } from 'primeng/api';
-import { eventTupleToStore } from '@fullcalendar/core';
 
 @Component({
   selector: 'app-liste',
@@ -24,9 +22,9 @@ export class ListeComponent implements OnInit, OnDestroy {
     private mealService: MealsService,
     private dialogService: DialogService,
     private messageService: MessageService
-  ) {}
+  ) { }
 
-  findEvent = (id: string) : number => {
+  findEvent = (id: string): number => {
     console.log('findevent', this.EVENTS);
     const index = this.EVENTS.map(event => event.id).indexOf(id);
     return index;
@@ -36,7 +34,7 @@ export class ListeComponent implements OnInit, OnDestroy {
     console.log('minusclick', id);
     const index = this.findEvent(id);
     console.log(this.EVENTS[index].content);
-    this.EVENTS.splice(index,1)
+    this.EVENTS.splice(index, 1)
     this.mealService.removeMeal(id);
   };
 
@@ -64,7 +62,7 @@ export class ListeComponent implements OnInit, OnDestroy {
   };
 
   Edit(event: meal) {
-    console.log('edit',event)
+    console.log('edit', event)
     const ref = this.dialogService.open(AddmealComponent, {
       data: { mode: 1, aMeal: event },
       header: 'Editer un repas',
@@ -75,7 +73,7 @@ export class ListeComponent implements OnInit, OnDestroy {
     ref.onClose.subscribe((data: meal) => {
       if (data) {
         if (data)
-        console.log('data', data);
+          console.log('data', data);
         this.messageService.add({
           severity: 'success',
           summary: 'Modification du repas',
@@ -85,7 +83,7 @@ export class ListeComponent implements OnInit, OnDestroy {
     });
   }
 
-  addevent = (event : meal) => {
+  addevent = (event: meal) => {
 
   }
 
@@ -102,7 +100,7 @@ export class ListeComponent implements OnInit, OnDestroy {
       if (data) {
         this.getMeals();
         const mode = data.mode;
-        console.log('data',data);
+        console.log('data', data);
         console.log('id', data.id);
         this.messageService.add({
           severity: 'success',

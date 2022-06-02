@@ -28,6 +28,8 @@ import { CategoryComponent } from './ads/components/categories/categories.compon
 import { MainadsComponent } from './ads/components/mainads/mainads.component';
 import { CateglistComponent } from './ads/components/categlist/categlist.component';
 import { NewadComponent } from './ads/components/newad/newad.component';
+import { PoidsComponent } from './components/poids/poids.component';
+import { AddWeightsComponent } from './components/add-weights/add-weights.component';
 
 
 const firebaseConfig = {
@@ -65,7 +67,9 @@ FullCalendarModule.registerPlugins([
     CategoryComponent,
     MainadsComponent,
     CateglistComponent,
-    NewadComponent
+    NewadComponent,
+    PoidsComponent,
+    AddWeightsComponent
   ],
   imports: [
     BrowserModule,
