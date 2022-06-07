@@ -6,6 +6,8 @@
         [(ngModel)]="dateRepas"
         [inline]="true"
         [autoZIndex]="true"
+        dateFormat="dd/mm/yy"
+        [firstDayOfWeek]="1"
       ></p-calendar>
     </div>
     <div class="p-field p-col-12 p-md-6">
@@ -32,7 +34,7 @@
           <div class="p-mb-2" style="margin-top: 10px">
             <label for="remarque">Remarque</label>
             <input
-              #content
+              #remarque
               [(ngModel)]="aMeal.remarque"
               id="remarque"
               type="text"

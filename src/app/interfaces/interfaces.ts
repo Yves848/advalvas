@@ -23,7 +23,7 @@ export interface event {
 }
 
 export interface poids {
-  id: string,
+  id?: string,
   date: string,
   poids: number;
   remarque?: string
