@@ -18,6 +18,13 @@ export class PoidsComponent implements OnInit {
   constructor(private poidService: PoidsService,
     private dialogService: DialogService) { }
 
+  asyncForEach = async (anArray: any[], callbak: any) => {
+    console.log('for');
+    for (var i = 0; i <= anArray.length - 1; i++) {
+      await callbak(anArray[i]);
+    }
+  };
+
   async ngOnInit() {
     await this.getWeights();
   }
@@ -41,6 +48,17 @@ export class PoidsComponent implements OnInit {
   }
 
   getWeights = async () => {
+    const tempWeights: poids[] = [];
+    const weights = await this.poidService.getWeights();
+
+    await this.asyncForEach(weights, (element: poids) => {
+      tempWeights.push(element);
+    });
+
+    this.Weights = tempWeights.sort((poids1: poids, poids2: poids) => {
+      if (poids1.poids <= poids2.poids) return 1
+      else return -1;
+    });
 
   }
 
