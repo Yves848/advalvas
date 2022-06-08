@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { poids } from 'src/app/interfaces/interfaces';
+import { poids, windowDimensions } from 'src/app/interfaces/interfaces';
 import { PoidsService } from 'src/app/services/poids.service';
 import { AddWeightsComponent } from '../add-weights/add-weights.component';
 
@@ -14,9 +14,18 @@ import { AddWeightsComponent } from '../add-weights/add-weights.component';
 export class PoidsComponent implements OnInit {
   Weights: poids[] = [];
   ref: DynamicDialogRef | undefined;
+  dimensions: windowDimensions = {
+    width: 0,
+    height: 0
+  }
 
   constructor(private poidService: PoidsService,
     private dialogService: DialogService) { }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.getDimensions();
+  }
 
   asyncForEach = async (anArray: any[], callbak: any) => {
     console.log('for');
@@ -25,8 +34,17 @@ export class PoidsComponent implements OnInit {
     }
   };
 
+  getDimensions() {
+    this.dimensions = {
+      width: document.body.offsetWidth,
+      height: document.body.offsetHeight
+    }
+    console.log('dimensions', this.dimensions);
+  }
+
   async ngOnInit() {
     await this.getWeights();
+
   }
 
   Add(): void {

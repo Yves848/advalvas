@@ -28,3 +28,8 @@ export interface poids {
   poids: number;
   remarque?: string
 }
+
+export interface windowDimensions {
+  width: number,
+  height: number
+}
