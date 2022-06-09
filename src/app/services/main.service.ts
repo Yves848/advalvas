@@ -8,7 +8,7 @@ import { MealsService } from '../services/meals.service'
 })
 export class MainService {
   user: any = null;
-  EVENTS:{}[] = [];
+  EVENTS: {}[] = [];
 
   async createNewUser(email: string, password: string, displayName?: String) {
     this.afAuth
@@ -16,7 +16,7 @@ export class MainService {
       .then(async (result) => {
         //console.log('result : ', result);
         this.user = await this.afAuth.currentUser;
-        this.user.updateProfile({displayName: displayName});
+        this.user.updateProfile({ displayName: displayName });
         this.router.navigate(['']);
       })
       .catch((error) => {
@@ -25,16 +25,16 @@ export class MainService {
   }
 
   checkLocalStorage = () => {
-    var localS  = localStorage.getItem('user');
-    var local2 : string = '{}';
+    var localS = localStorage.getItem('user');
+    var local2: string = '{}';
     if (localS) {
       local2 = localS;
     }
     const user = JSON.parse(local2);
-    console.log('checkLocalStorage',user.displayName);
+    console.log('checkLocalStorage', user.displayName);
     if (user.displayName) {
       this.user = user;
-      this.router.navigate(['list']);
+      this.router.navigate(['poids']);
     }
 
   }
@@ -44,10 +44,10 @@ export class MainService {
       .signInWithEmailAndPassword(email, password)
       .then(async (result) => {
         this.user = await this.afAuth.currentUser;
-        localStorage.setItem('user',JSON.stringify(this.user));
-        this.router.navigate(['list']);
+        localStorage.setItem('user', JSON.stringify(this.user));
+        this.router.navigate(['poids']);
       })
-      .catch((error) => {});
+      .catch((error) => { });
   }
 
   async logout() {
@@ -56,5 +56,5 @@ export class MainService {
     this.router.navigate(['']);
   }
 
-  constructor(public afAuth: AngularFireAuth, private router: Router, private mealService: MealsService) {}
+  constructor(public afAuth: AngularFireAuth, private router: Router, private mealService: MealsService) { }
 }

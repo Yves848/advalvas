@@ -26,6 +26,7 @@ export interface poids {
   id?: string,
   date: string,
   poids: number;
+  difference?: number;
   remarque?: string
 }
 
