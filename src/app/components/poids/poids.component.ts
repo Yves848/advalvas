@@ -4,6 +4,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { poids, windowDimensions } from 'src/app/interfaces/interfaces';
 import { PoidsService } from 'src/app/services/poids.service';
 import { AddWeightsComponent } from '../add-weights/add-weights.component';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-poids',
@@ -76,7 +77,7 @@ export class PoidsComponent implements OnInit {
     });
 
     this.Weights = tempWeights.sort((poids1: poids, poids2: poids) => {
-      if (poids1.poids <= poids2.poids) return 1
+      if (poids1.date >= poids2.date) return 1
       else return -1;
     });
 
@@ -84,18 +85,13 @@ export class PoidsComponent implements OnInit {
     let oldPoids: number = 0;
     await this.asyncForEach(this.Weights, (element: poids, i: number) => {
       let difference: number = 0;
-      console.log(element.poids, i)
       if (i === 0) {
         oldPoids = element.poids;
         difference = 0;
       }
       else {
         oldPoids = this.Weights[i - 1].poids;
-        console.log('oldPoids', oldPoids, typeof (oldPoids));
-        console.log('poids', element.poids, typeof (element.poids));
-        //debugger;
         difference = parseFloat((oldPoids - element.poids).toFixed(2)) * -1;
-        console.log('difference', difference);
       }
       this.differenceTotale = this.differenceTotale + difference;
       tempWeights.push({
