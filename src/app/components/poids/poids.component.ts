@@ -22,8 +22,14 @@ export class PoidsComponent implements OnInit {
     height: 0
   }
 
+  data: any;
+
+  options: any;
+
   constructor(private poidService: PoidsService,
-    private dialogService: DialogService) { }
+    private dialogService: DialogService) {
+
+  }
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
@@ -47,6 +53,25 @@ export class PoidsComponent implements OnInit {
 
   async ngOnInit() {
     await this.getWeights();
+    this.data = {
+      labels: ['un', 'deux', 'trois', 'quatre'],
+      datasets: [
+        {
+          label: 'Poids',
+          data: [100, 110, 115, 120],
+          fill: false,
+          borderColor: '#42A5F5'
+        }
+      ]
+    }
+
+    this.options = {
+      title: {
+        display: true,
+        text: "Poids",
+        fontSize: 16
+      }
+    }
 
   }
 

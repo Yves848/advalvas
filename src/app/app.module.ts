@@ -30,6 +30,7 @@ import { CateglistComponent } from './ads/components/categlist/categlist.compone
 import { NewadComponent } from './ads/components/newad/newad.component';
 import { PoidsComponent } from './components/poids/poids.component';
 import { AddWeightsComponent } from './components/add-weights/add-weights.component';
+import { ChartComponent } from './components/chart/chart.component';
 
 
 const firebaseConfig = {
@@ -69,7 +70,8 @@ FullCalendarModule.registerPlugins([
     CateglistComponent,
     NewadComponent,
     PoidsComponent,
-    AddWeightsComponent
+    AddWeightsComponent,
+    ChartComponent
   ],
   imports: [
     BrowserModule,
